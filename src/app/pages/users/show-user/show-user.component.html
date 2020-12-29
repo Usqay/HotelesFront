@@ -1,0 +1,77 @@
+<div class="row">
+    <div class="col-12">
+        <app-breadcrumb [items]="['Configuración', 'Usuarios']" [active_item]="'Detalle'" [back_button]="true" [back_route]="'/users'"></app-breadcrumb>
+    </div>
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header b-l-primary py-4 d-flex align-items-center w-100 justify-content-between">
+                <h5 class="text-muted">Datos de usuario</h5>
+                <button mat-icon-button (click)="showEditDialog()" matTooltip="Editar información">
+                    <mat-icon>edit</mat-icon>
+                </button>
+            </div>
+            <div class="card-body py-3">
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <mat-list *ngIf="user">
+                            <mat-list-item class="h-auto my-2">
+                                <mat-icon mat-list-icon>done_all</mat-icon>
+                                <div mat-line class="font-weight-bold text-muted">Usuario</div>
+                                <div mat-line class="font-weight-normal">{{user.name}}</div>
+                            </mat-list-item>
+                            <mat-list-item class="h-auto my-2">
+                                <mat-icon mat-list-icon>done_all</mat-icon>
+                                <div mat-line class="font-weight-bold text-muted">Email</div>
+                                <div mat-line class="font-weight-normal">{{user.email}}</div>
+                            </mat-list-item>
+                            <mat-list-item class="h-auto my-2">
+                                <mat-icon mat-list-icon>done_all</mat-icon>
+                                <div mat-line class="font-weight-bold text-muted">Rol</div>
+                                <div mat-line class="font-weight-normal">{{user.role.name}}</div>
+                            </mat-list-item>
+                            <mat-list-item class="h-auto my-2">
+                                <mat-icon mat-list-icon>done_all</mat-icon>
+                                <div mat-line class="font-weight-bold text-muted">Fecha de registro</div>
+                                <div mat-line class="font-weight-normal">{{user.created_at | date:'dd MMM y HH:mm'}}</div>
+                            </mat-list-item>
+                        </mat-list>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <mat-list *ngIf="user">
+                            <mat-list-item class="h-auto my-2">
+                                <mat-icon mat-list-icon>done_all</mat-icon>
+                                <div mat-line class="font-weight-bold text-muted">Nombres</div>
+                                <div mat-line class="font-weight-normal">{{user.people.name}}</div>
+                            </mat-list-item>
+                            <mat-list-item class="h-auto my-2">
+                                <mat-icon mat-list-icon>done_all</mat-icon>
+                                <div mat-line class="font-weight-bold text-muted">Apellidos</div>
+                                <div mat-line class="font-weight-normal">{{user.people.last_name}}</div>
+                            </mat-list-item>
+                            <mat-list-item class="h-auto my-2">
+                                <mat-icon mat-list-icon>done_all</mat-icon>
+                                <div mat-line class="font-weight-bold text-muted">Genero</div>
+                                <div mat-line class="font-weight-normal">{{user.people.gender.name}}</div>
+                            </mat-list-item>
+                            <mat-list-item class="h-auto my-2">
+                                <mat-icon mat-list-icon>done_all</mat-icon>
+                                <div mat-line class="font-weight-bold text-muted">Telf. </div>
+                                <div mat-line class="font-weight-normal">{{user.people.phone_number}}</div>
+                            </mat-list-item>
+                            <mat-list-item class="h-auto my-2">
+                                <mat-icon mat-list-icon>done_all</mat-icon>
+                                <div mat-line class="font-weight-bold text-muted">Cumpleaños</div>
+                                <div mat-line class="font-weight-normal">{{user.people.birthday_date | date}}</div>
+                            </mat-list-item>
+                            <mat-list-item class="h-auto my-2">
+                                <mat-icon mat-list-icon>done_all</mat-icon>
+                                <div mat-line class="font-weight-bold text-muted">Dirección</div>
+                                <div mat-line class="font-weight-normal">{{user.people.address}}</div>
+                            </mat-list-item>
+                        </mat-list>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,2 @@
+export interface ProductStock {
+}

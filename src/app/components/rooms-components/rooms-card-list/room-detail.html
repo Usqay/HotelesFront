@@ -1,0 +1,27 @@
+<h2 mat-dialog-title>Habitación {{room.name}}</h2>
+<p class="card-text">{{room.description}}</p>
+<p class="card-text">
+    <strong>Estado: </strong> {{room.room_status.name}}
+</p>
+<div class="row">
+    <div class="col">
+        <button [disabled]="room.room_status_id != 1" (click)="onReserve()" mat-flat-button color="primary" class="w-100">
+            Reservar
+        </button>
+    </div>
+    <div class="col">
+        <button mat-button color="primary" (click)="onShow()" class="w-100">
+            Ver más
+        </button>
+    </div>
+    <div class="col">
+        <button mat-flat-button color="accent" (click)="onDelete()" class="w-100">
+            Eliminar
+        </button>
+    </div>
+    <div class="col">
+        <button mat-button color="accent" class="w-100" (click)="onClose()">
+            Cerrar
+        </button>
+    </div>
+</div>

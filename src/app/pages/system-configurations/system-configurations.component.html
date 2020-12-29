@@ -1,0 +1,231 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <app-breadcrumb [items]="['Configuración']" [active_item]="'Configuraciones del sistema'"></app-breadcrumb>
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header b-l-primary py-4 d-flex align-items-center w-100 justify-content-between">
+                    <h5 class="text-muted">Configuraciones del sistema</h5>
+                </div>
+                <div class="card-body py-3">
+                    <mat-tab-group>
+                        <mat-tab label="Negocio">
+                            <form [formGroup]="businessForm" (ngSubmit)="onSubmitBusinessForm()" novalidate
+                                autocomplete="off" class="row m-0 pt-4 w-100">
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Razón social</mat-label>
+                                        <input matInput formControlName="business_name">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>RUC</mat-label>
+                                        <input matInput formControlName="ruc">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Nombre comercial</mat-label>
+                                        <input matInput formControlName="commercial_name">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Dirección</mat-label>
+                                        <input matInput formControlName="business_address">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Telefono</mat-label>
+                                        <input matInput formControlName="business_phone_number">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Nombre de representante</mat-label>
+                                        <input matInput formControlName="business_holder_name">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-4">
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>N° doc. de representante</mat-label>
+                                        <input matInput formControlName="business_holder_document_number">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12">
+                                    <mat-slide-toggle class="d-block my-2" color="primary"
+                                        formControlName="print_logo">Imprimir logo en boletas y tickets
+                                    </mat-slide-toggle>
+                                </div>
+                                <div class="col-12 text-right">
+                                    <button mat-flat-button type="submit" [disabled]="businessForm.invalid"
+                                        color="primary" class="m-1">
+                                        <mat-icon>save</mat-icon>
+                                        Guardar
+                                    </button>
+                                </div>
+                            </form>
+                        </mat-tab>
+                        <mat-tab label="Notificaciones">
+                            <form [formGroup]="notificationsForm" (ngSubmit)="onSubmitNotificationsForm()" novalidate
+                                autocomplete="off" class="row m-0 pt-4 w-100">
+                                <div class="col-12">
+                                    <mat-form-field class="w-100">
+                                        <mat-chip-list #chipList>
+                                            <mat-chip *ngFor="let email of notificationsEmails" selectable removable
+                                                (removed)="removeNotificaitonEmail(email)">
+                                                {{email}}
+                                                <mat-icon matChipRemove>cancel</mat-icon>
+                                            </mat-chip>
+                                            <input placeholder="Enviar notificaciones a"
+                                                formControlName="notifications_emails" [matChipInputFor]="chipList"
+                                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                                [matChipInputAddOnBlur]="true"
+                                                (matChipInputTokenEnd)="addNotificationEmail($event)">
+                                        </mat-chip-list>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12">
+                                    <mat-slide-toggle class="d-block my-2" color="primary"
+                                        formControlName="notify_reservation_created">Notificar reservación creada
+                                    </mat-slide-toggle>
+                                    <mat-slide-toggle class="d-block my-2" color="primary"
+                                        formControlName="notify_reservation_updated">Notificar reservación actualizada
+                                    </mat-slide-toggle>
+                                    <mat-slide-toggle class="d-block my-2" color="primary"
+                                        formControlName="notify_reservation_canceled">Notificar reservación cancelada
+                                    </mat-slide-toggle>
+                                </div>
+                                <div class="col-12 text-right">
+                                    <button mat-flat-button type="submit"
+                                        [disabled]="notificationsForm.invalid || notificationsEmails.length == 0"
+                                        color="primary" class="m-1">
+                                        <mat-icon>save</mat-icon>
+                                        Guardar
+                                    </button>
+                                </div>
+                            </form>
+                        </mat-tab>
+                        <mat-tab label="Facturación">
+                            <form [formGroup]="billingForm" (ngSubmit)="onSubmitBillingForm()" novalidate
+                                autocomplete="off" class="row m-0 pt-4 w-100">
+                                <div class="col-12 col-md-6">
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Ruta de API</mat-label>
+                                        <input matInput formControlName="billing_route">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Token de API</mat-label>
+                                        <input matInput formControlName="billing_token">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-3">
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Serie de facturas</mat-label>
+                                        <input matInput formControlName="invoice_series">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-3">
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Serie de boletas</mat-label>
+                                        <input matInput formControlName="ballot_series">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-3">
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Incremental de facturas</mat-label>
+                                        <input matInput formControlName="invoice_auto_increment">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-4 col-lg-3">
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Incremental de boletas</mat-label>
+                                        <input matInput formControlName="ballot_auto_increment">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 text-right">
+                                    <button mat-flat-button type="submit" [disabled]="billingForm.invalid"
+                                        color="primary" class="m-1">
+                                        <mat-icon>save</mat-icon>
+                                        Guardar
+                                    </button>
+                                </div>
+                            </form>
+                        </mat-tab>
+                        <mat-tab label="Impresión">
+                            <form [formGroup]="printingForm" (ngSubmit)="onSubmitPrintingForm()" novalidate
+                                autocomplete="off" class="row m-0 pt-4 w-100">
+                                <div class="col-12 col-md-3">
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Facturas</mat-label>
+                                        <mat-select formControlName="invoice_printer">
+                                            <mat-option *ngFor="let item of printers" [value]="item.id">
+                                                {{item.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Bolletas</mat-label>
+                                        <mat-select formControlName="ballot_printer">
+                                            <mat-option *ngFor="let item of printers" [value]="item.id">
+                                                {{item.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Tickets</mat-label>
+                                        <mat-select formControlName="ticket_printer">
+                                            <mat-option *ngFor="let item of printers" [value]="item.id">
+                                                {{item.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 col-md-3">
+                                    <mat-form-field appearance="outline" class="w-100">
+                                        <mat-label>Otros</mat-label>
+                                        <mat-select formControlName="base_printer">
+                                            <mat-option *ngFor="let item of printers" [value]="item.id">
+                                                {{item.name}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-12 text-right">
+                                    <button mat-flat-button type="submit" [disabled]="printingForm.invalid"
+                                        color="primary" class="m-1">
+                                        <mat-icon>save</mat-icon>
+                                        Guardar
+                                    </button>
+                                </div>
+                            </form>
+                        </mat-tab>
+                        <mat-tab label="Logotipo">
+                            <div class="row w-100">
+                                <div class="col-12 my-4 text-center">
+                                    <img [src]="businessLogoUrl" alt="Logotipo" class="img-fluid" width="300">
+                                </div>
+                                <div class="col-12 text-center my-3">
+                                    <button mat-flat-button color="primary" (click)="logoFileInput.click()">Cargar Logotipo</button>
+                                    <input type="file" class="d-none" #logoFileInput (change)="onSelectLogoFile($event)">
+                                </div>
+                                <div class="col-12 text-center text-muted">
+                                    <p class="card-text">*Su logotipo debe ser de máximo 500 pixeles de ancho</p>
+                                </div>
+                            </div>
+                        </mat-tab>
+                    </mat-tab-group>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

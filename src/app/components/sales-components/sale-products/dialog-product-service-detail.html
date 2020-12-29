@@ -1,0 +1,82 @@
+<h5 mat-dialog-title *ngIf="product">{{product.name | titlecase}}</h5>
+<h5 mat-dialog-title *ngIf="service">{{service.name | titlecase}}</h5>
+
+<div class="row" *ngIf="!customPrice && product != null">
+    <div class="col-12 col-md-3 col-lg-2" *ngFor="let item of product.prices">
+        <div class="card shadow cursor-pointer" (click)="setPrice(item.sale_price, item.currency); onAddProductOrService()">
+            <div class="card-header bg-primary text-center p-1 pt-2">
+                <h6 class="text-white font-weight-normal">{{item.currency.plural_name}}</h6>
+            </div>
+            <div class="card-body text-center px-1 pt-1 pb-1">
+                <h5>{{item.sale_price | currency:item.currency.symbol}}</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-3 col-lg-2">
+        <div class="card shadow cursor-pointer bg-primary" (click)="customPrice = true">
+            <div class="card-body text-center px-1 py-4">
+                <h5 class="text-white font-weight-normal">Otro</h5>             
+            </div>
+        </div>
+    </div>
+    <div class="col-12 text-right">
+        <button class="m-1" mat-button color="accent" (click)="onCancel()">
+            <mat-icon>close</mat-icon>
+            Cerrar
+        </button>
+    </div>
+</div>
+<div class="row" *ngIf="!customPrice && service != null">
+    <div class="col-12 mb-3">
+        {{service.description}}
+    </div>
+    <div class="col-12 col-md-3 col-lg-2" *ngFor="let item of service.prices">
+        <div class="card shadow cursor-pointer" (click)="setPrice(item.sale_price, item.currency); onAddProductOrService()">
+            <div class="card-header bg-primary text-center p-1 pt-2">
+                <h6 class="text-white font-weight-normal">{{item.currency.plural_name}}</h6>
+            </div>
+            <div class="card-body text-center px-1 pt-1 pb-1">
+                <h5>{{item.sale_price | currency:item.currency.symbol}}</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-3 col-lg-2">
+        <div class="card shadow cursor-pointer bg-primary" (click)="customPrice = true">
+            <div class="card-body text-center px-1 py-4">
+                <h5 class="text-white font-weight-normal">Otro</h5>             
+            </div>
+        </div>
+    </div>
+    <div class="col-12 text-right">
+        <button class="m-1" mat-button color="accent" (click)="onCancel()">
+            <mat-icon>close</mat-icon>
+            Cerrar
+        </button>
+    </div>
+</div>
+
+<div class="row" *ngIf="customPrice">
+    <div class="col-12 col-md-3">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Moneda</mat-label>
+            <mat-select [(ngModel)]="currency">
+              <mat-option *ngFor="let item of currencies" [value]="item">
+                {{item.plural_name}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="col-12 col-md-2">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Precio</mat-label>
+            <input matInput min="0" [(ngModel)]="price" step="1" type="number">
+        </mat-form-field>
+    </div>
+    <div class="col-12 text-right">
+        <button class="m-1" mat-button color="primary" (click)="customPrice = false">Cancelar</button>
+        <button class="m-1" mat-flat-button color="primary" (click)="onAddProductOrService()">
+            <mat-icon>add</mat-icon>
+            Agregar
+        </button>
+    </div>
+</div>

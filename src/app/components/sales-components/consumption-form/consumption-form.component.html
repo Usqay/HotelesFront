@@ -1,0 +1,22 @@
+<div class="row">
+    <div class="col-12 d-flex justify-content-between align-items-center w-100">
+        <h5 class="font-weight-bold text-muted">Añadir a la habitación...</h5>
+        <button mat-icon-button matTooltip="Cerrar" color="primary" (click)="_onCancel()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div class="col-12 col-md-4" *ngFor="let item of reservationRooms">
+        <div class="card mx-0 my-3 cursor-pointer" [@hover]="item.hoverState ? 'hoverIn' : 'hoverOut'"
+            (mouseenter)="item.hoverState = !item.hoverState"
+            (mouseleave)="item.hoverState = !item.hoverState"
+            (click)="selectReservation(item)">
+            <div class="card-body px-1 py-2 text-center">
+                <mat-icon>
+                    today
+                </mat-icon>
+                <p class="my-1 card-text font-weight-bold">{{item.room.name}} - {{item.room.room_category.name}}</p>
+                <p class="my-1 card-text" *ngIf="item.people">{{item.people.full_name}}</p>
+            </div>
+        </div>
+    </div>
+</div>

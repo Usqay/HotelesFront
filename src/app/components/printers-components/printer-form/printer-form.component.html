@@ -1,0 +1,41 @@
+<form [formGroup]="form" (ngSubmit)="_onSubmit()" novalidate autocomplete="off">
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Nombre</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-3">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Tipo</mat-label>
+                <mat-select formControlName="printer_type_id">
+                  <mat-option *ngFor="let item of printerTypes" [value]="item.id">
+                    {{item.name}}
+                  </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-3">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Puerto</mat-label>
+                <input matInput formControlName="port">
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-3">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Dirección IP</mat-label>
+                <input matInput formControlName="ip_address">
+            </mat-form-field>
+        </div>
+        <div class="col-12 text-right">
+            <button mat-button color="primary" type="button" (click)="_onCancel()" class="m-1">
+                Cancelar
+            </button>
+            <button mat-flat-button type="submit" [disabled]="form.invalid" color="primary" class="m-1">
+                <mat-icon>save</mat-icon>
+                Guardar
+            </button>
+        </div>
+    </div>
+</form>

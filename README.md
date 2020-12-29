@@ -1,27 +1,26 @@
-# Cuba
+# Hoteles Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.0.
+This project was made with Angular 10, is a frontend project for the Hoteles Project of Usqay.
 
-## Development server
+## Developer
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+This project was made with ♥ by [Víctor Moreno](https://www.facebook.com/vmorenoz/).
+When i made this project, only God and me could understand the code, now only God can, please don't hate me, remember i love you. :D
 
-## Code scaffolding
+## How to deploy and build
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+First, download the project repository.
+After, run the next commands:
+`npm install`
+`ng serve` if you want serve the project on your local device.
+`ng build` if you want build the project for production.
 
-## Build
+Adittional, whe you are running the build command, please add the flags: `--pro` and `--aot`.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## What do you need to run this project
 
-## Running unit tests
+You need NodeJs, AngularCLI and good vibes!!
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Don't forget
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+This project is only frontend, you need deploy the backend project made in laravel, and change the routes of the API in this project enviroments.

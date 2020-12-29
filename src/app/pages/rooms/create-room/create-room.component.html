@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-12">
+      <app-breadcrumb [items]="['Habitaciones']" [active_item]="'Crear'" [back_button]="true" [back_route]="'/rooms'"></app-breadcrumb>
+  </div>
+  <div class="col-12">
+      <div class="card">
+          <div class="card-header b-l-primary py-4 d-flex align-items-center w-100 justify-content-between">
+              <h5 class="text-muted">Crear habitación</h5>
+          </div>
+          <div class="card-body py-3">
+              <app-room-form (onCancel)="onCancel()" (onSubmit)="onSubmit($event)"></app-room-form>
+          </div>
+      </div>
+  </div>
+</div>

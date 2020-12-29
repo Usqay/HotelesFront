@@ -1,0 +1,13 @@
+ng g m pages/printers --routing
+ng g c pages/printers --m=pages/printers/printers.module
+ng g c pages/printers/list-printers --module=pages/printers/printers.module
+ng g c pages/printers/create-printer --module=pages/printers/printers.module
+ng g c pages/printers/show-printer --module=pages/printers/printers.module
+
+ng g m components/printers-components
+ng g c components/printers-components/printer-form --module=components/printers-components/printers-components.module
+
+ng g s services/printer
+ng g s services/printer-type
+ng g i interfaces/printer
+ng g i interfaces/printer-type

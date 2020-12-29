@@ -1,0 +1,184 @@
+/**=====================
+     21. Select 2 CSS Start
+==========================**/
+.ng-select {
+  .ng-select-container,
+  .ng-dropdown-panel {
+    border: 1px solid $light-semi-gray !important;
+  }
+  .ng-select-container {
+    background-color: $transparent-color;
+  }
+  &.rtl {
+    .ng-select-container {
+      .ng-value-container {
+        padding-right: 10px;
+      }
+    }
+  }
+  &.btn-pill {
+    .ng-select-container {
+      border-radius: 60px;
+    }
+  }
+  &.btn-square {
+    .ng-select-container {
+      border-radius: 0;
+    }
+  }
+  &.input-air-primary {
+    .ng-select-container {
+      box-shadow: 0 3px 5px 1px rgba(88, 103, 221, 0.15) !important;
+    }
+  }
+  &.ng-select-opened {
+    &.btn-pill {
+      > .ng-select-container {
+        border-radius: 18px;
+      }
+    }
+    > .ng-select-container {
+      border-color: $light-semi-gray !important;
+      background-color: $transparent-color;
+    }
+  }
+  &.ng-select-multiple {
+    .ng-select-container {
+      .ng-value-container {
+        .ng-placeholder {
+          top: 7px;
+        }
+        .ng-value {
+          background-color: $primary-color !important;
+          color: $white;
+          .ng-value-icon {
+            &:hover {
+              background-color: darken($primary-color, 5%) !important;
+            }
+            &.left {
+              border: none !important;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.ng-dropdown-panel {
+  .ng-dropdown-panel-items {
+    .ng-option {
+      &.ng-option-selected,
+      &.ng-option-selected.ng-option-marked {
+        color: $white !important;
+        background-color: $primary-color !important;
+      }
+    }
+  }
+}
+
+.select2 {
+  max-width: 100%;
+}
+.select2-dropdown {
+  z-index: 8;
+}
+.add-post {
+  #cke_text-box {
+    border: 1px solid $light-semi-gray;
+  }
+  form {
+    .m-checkbox-inline {
+      label {
+        margin-bottom: 0;
+      }
+    }
+    .form-group {
+      margin-bottom: 30px;
+      .form-control {
+        border: 1px solid $light-semi-gray;
+      }
+      .col-form-label {
+        padding-bottom: 0;
+        padding-top: 0;
+      }
+    }
+  }
+  .dropzone {
+    margin-bottom: 30px;
+  }
+}
+.ng-select-outline {
+  @each $ng-name, $ng-color in (primary, $primary-color), (secondary, $secondary-color), (success, $success-color),
+    (danger, $danger-color), (info, $info-color), (light, $light-color), (inverse, $dark-color),
+    (warning, $warning-color)
+  {
+    &.form-control-#{$ng-name} {
+      &.ng-select {
+        padding: 0;
+        border: none;
+        .ng-select-container {
+          border-color: $ng-color !important;
+          border-radius: 0.25rem;
+          color: $ng-color;
+          .ng-value-container {
+            .ng-placeholder {
+              color: $ng-color;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.ng-select-bg {
+  @each $ng-name, $ng-color in (primary, $primary-color), (secondary, $secondary-color), (success, $success-color),
+    (danger, $danger-color), (info, $info-color), (light, $light-color), (inverse, $dark-color),
+    (warning, $warning-color)
+  {
+    &.form-control-#{$ng-name} {
+      &.ng-select {
+        padding: 0;
+        border: none;
+        .ng-select-container {
+          background-color: $ng-color;
+          border-radius: 0.25rem;
+          color: $white;
+          .ng-value-container {
+            .ng-placeholder {
+              color: $white;
+            }
+          }
+        }
+        .ng-dropdown-panel {
+          .ng-dropdown-panel-items {
+            .ng-option {
+              background-color: $ng-color;
+              color: $white;
+            }
+          }
+        }
+        .ng-arrow-wrapper {
+          .ng-arrow {
+            border-color: $white transparent transparent;
+          }
+        }
+        &.ng-select-opened {
+          > .ng-select-container {
+            .ng-arrow {
+              border-color: transparent transparent $white;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.select2-drpdwn {
+  .form-control {
+    border-radius: 5px;
+  }
+}
+
+/**=====================
+     21. Select 2 CSS Ends
+==========================**/

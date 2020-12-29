@@ -1,0 +1,38 @@
+<!-- page-wrapper Start-->
+<div [attr.main-theme-layout]="layout.config.settings.layout_type" 
+     [ngClass]="layout.config.color.mix_background_layout">
+  <div class="page-wrapper" 
+       id="canvas-bookmark"
+       [ngClass]="layout.config.settings.sidebar.type">
+    <app-header></app-header>
+    <!-- Page Body Start-->
+    <div class="page-body-wrapper"
+         [ngClass]="layout.config.settings.sidebar.body_type">
+      <header class="main-nav"
+              [attr.sidebar-layout]="layout.config.settings.sidebar_setting"
+              [class.close_icon]="navServices.collapseSidebar">
+        <app-sidebar></app-sidebar>
+      </header>
+      <div class="page-body">
+        <div class="pt-4" *ngIf="alerts.length > 0">
+          <div class="alert alert-secondary d-flex align-items-center justify-content-between" *ngFor="let item of alerts">
+            <h4 class="alert-heading cursor-pointer" (click)="navigateTo(item.link)">{{item.title}}!</h4>
+            <mat-icon [matTooltip]="item.info" class="cursor-pointer">
+              info
+            </mat-icon>
+          </div>
+        </div>
+        <main [@fadeInAnimation]="getRouterOutletState(o)">
+          <router-outlet #o="outlet"></router-outlet>
+        </main>
+      </div>
+      <!-- footer start-->
+      <!-- <footer class="footer">
+        <app-footer></app-footer>
+      </footer> -->
+      <!-- footer End-->
+    </div>
+    <!-- Page Body End-->
+  </div>
+</div>
+<!-- page-wrapper End-->

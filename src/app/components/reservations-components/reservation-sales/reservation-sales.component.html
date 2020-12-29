@@ -1,0 +1,55 @@
+<div class="sales-container">
+    <div class="d-flex justify-content-between align-items-center">
+        <h6 class="card-title text-muted">Consumos</h6>
+        <div>
+            <button mat-icon-button matTooltip="Actualizar" color="primary" (click)="getSales()">
+                <mat-icon>refresh</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Imprimir" *ngIf="saleServices.length > 0" color="accent">
+                <mat-icon>print</mat-icon>
+            </button>
+        </div>
+    </div>
+    
+    
+    <div *ngIf="saleProducts.length == 0 && saleServices.length == 0" class="text-center mt-4">
+        <p>Ningun consumo registrado.</p>
+    </div>
+    
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item py-2" *ngFor="let item of saleProducts">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="font-weight-bold text-muted">{{item.product.name | titlecase}}</div>
+                <p>{{item.created_at | date:'dd MMM y HH:mm'}}</p>
+            </div>
+            <div class="d-flex w-100 justify-content-between align-items-center">
+                <small class="text-muted">
+                    Cant.: <strong>{{item.quantity}}</strong>
+                </small>
+                <small class="text-muted">P. unitario:
+                    <strong>{{item.unit_price | currency:item.currency.symbol}}</strong>
+                </small>
+                <small class="text-muted">P. total:
+                    <strong>{{calculateTotalPrice(item) | currency:item.currency.symbol}}</strong>
+                </small>
+            </div>
+        </li>
+        <li class="list-group-item py-2" *ngFor="let item of saleServices">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="font-weight-bold text-muted">{{item.service.name | titlecase}}</div>
+                <p>{{item.created_at | date:'dd MMM y HH:mm'}}</p>
+            </div>
+            <div class="d-flex w-100 justify-content-between align-items-center">
+                <small class="text-muted">
+                    Cant.: <strong>{{item.quantity}}</strong>
+                </small>
+                <small class="text-muted">P. unitario:
+                    <strong>{{item.unit_price | currency:item.currency.symbol}}</strong>
+                </small>
+                <small class="text-muted">P. total:
+                    <strong>{{calculateTotalPrice(item) | currency:item.currency.symbol}}</strong>
+                </small>
+            </div>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,80 @@
+<h5 mat-dialog-title>Habitación: {{room.name}}</h5>
+<div class="row" *ngIf="!customPrice">
+    <div class="col-12">
+        <p *ngIf="room && room.description && room.description.length > 0">{{room.description}}</p>
+    </div>
+    <div class="col-12 col-md-3 col-lg-2" *ngFor="let item of room.room_prices">
+        <div class="card shadow cursor-pointer" (click)="setPrice('hour', item.hour_price, item.currency); onAddRoom()">
+            <div class="card-header bg-primary text-center p-1 pt-2">
+                <h6 class="text-white font-weight-normal">{{item.currency.plural_name}}</h6>
+            </div>
+            <div class="card-body text-center px-1 py-2">
+                <h5>{{item.hour_price | currency:item.currency.symbol}}</h5>
+                <p class="card-text">Por hora</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-3 col-lg-2" *ngFor="let item of room.room_prices">
+        <div class="card shadow cursor-pointer" (click)="setPrice('day', item.day_price, item.currency); onAddRoom()">
+            <div class="card-header bg-primary text-center p-1 pt-2">
+                <h6 class="text-white font-weight-normal">{{item.currency.plural_name}}</h6>
+            </div>
+            <div class="card-body text-center px-1 py-2">
+                <h5>{{item.day_price | currency:item.currency.symbol}}</h5>
+                <p class="card-text">Por día</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-3 col-lg-2">
+        <div class="card shadow cursor-pointer bg-primary" (click)="customPrice = true">
+            <div class="card-body text-center px-1">
+                <h5 class="text-white font-weight-normal">Otro</h5>             
+            </div>
+        </div>
+    </div>
+    <div class="col-12 text-right">
+        <button class="m-1" mat-button color="warn" (click)="onCancel()">
+            <mat-icon>close</mat-icon>
+            Cerrar
+        </button>
+    </div>
+</div>
+
+<div class="row" *ngIf="customPrice">
+    <div class="col-12 col-md-3">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Moneda</mat-label>
+            <mat-select [(ngModel)]="currency">
+              <mat-option *ngFor="let item of currencies" [value]="item">
+                {{item.plural_name}}
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="col-12 col-md-3">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Modalidad</mat-label>
+            <mat-select [(ngModel)]="priceType">
+              <mat-option value="hour">
+                Hora
+              </mat-option>
+              <mat-option value="day">
+                Día
+              </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="col-12 col-md-2">
+        <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Precio</mat-label>
+            <input matInput min="0" [(ngModel)]="priceValue" step="1" type="number">
+        </mat-form-field>
+    </div>
+    <div class="col-12 text-right">
+        <button class="m-1" mat-button color="primary" (click)="customPrice = false">Cancelar</button>
+        <button class="m-1" mat-flat-button color="primary" (click)="onAddRoom()">
+            <mat-icon>add</mat-icon>
+            Agregar
+        </button>
+    </div>
+</div>

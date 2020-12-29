@@ -1,0 +1,22 @@
+<div class="container-fluid px-0">
+  <div class="page-header">
+    <div class="row">
+      <div class="col-8">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a [routerLink]="'/'">
+              <app-feather-icons [icon]="'home'"></app-feather-icons>
+            </a>
+          </li>
+          <li class="breadcrumb-item" *ngFor="let item of items">{{item}}</li>
+          <li class="breadcrumb-item active">{{active_item}}</li>
+        </ol>
+      </div>
+      <div class="col-4 text-right" *ngIf="back_button">
+        <button mat-icon-button matTooltip="Volver" color="primary" [routerLink]="back_route">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

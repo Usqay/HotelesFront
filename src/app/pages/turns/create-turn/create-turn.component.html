@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-12">
+      <app-breadcrumb [items]="['Turnos']" [active_item]="'Crear'" [back_button]="true" [back_route]="'/turns'"></app-breadcrumb>
+  </div>
+  <div class="col-12">
+    <div class="card">
+        <div class="card-header b-l-primary py-4 d-flex align-items-center w-100 justify-content-between">
+            <h5 class="text-muted">Crear turno</h5>
+        </div>
+        <div class="card-body py-3">
+            <app-turn-form (onCancel)="onCancel()" (onSubmit)="onSubmit($event)"></app-turn-form>
+        </div>
+    </div>
+  </div>
+</div>

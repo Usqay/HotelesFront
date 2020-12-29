@@ -1,0 +1,37 @@
+<form [formGroup]="form" (ngSubmit)="_onSubmit()" novalidate autocomplete="off">
+    <div class="row">
+        <div class="col-12 col-md-6 col-lg-4">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Nombre</mat-label>
+                <input matInput formControlName="name" placeholder="Ej. Sol">
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6 col-lg-4">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Nombre plural</mat-label>
+                <input matInput formControlName="plural_name" placeholder="Ej. Soles">
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-3 col-lg-2">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Codigo</mat-label>
+                <input matInput formControlName="code" placeholder="Ej. PEN">
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-3 col-lg-2">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Simbolo</mat-label>
+                <input matInput formControlName="symbol" placeholder="Ej. S/.">
+            </mat-form-field>
+        </div>
+        <div class="col-12 text-right">
+            <button mat-button color="primary" type="button" (click)="_onCancel()" class="m-1">
+                Cancelar
+            </button>
+            <button mat-flat-button type="submit" [disabled]="form.invalid" color="primary" class="m-1">
+                <mat-icon>save</mat-icon>
+                Guardar
+            </button>
+        </div>
+    </div>
+</form>

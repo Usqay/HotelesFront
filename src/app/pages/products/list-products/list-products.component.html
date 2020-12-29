@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-12">
+      <app-breadcrumb [items]="['Productos']" [active_item]="'Listar'"></app-breadcrumb>
+  </div>
+  <div class="col-12">
+      <div class="card">
+          <div class="card-header b-l-primary py-4 d-flex align-items-center w-100 justify-content-between">
+              <h5 class="text-muted">Productos</h5>
+          </div>
+          <div class="card-body py-3">
+              <div class="row">
+                <div class="col-12 d-flex justify-content-between align-items-start">
+                    <button mat-flat-button color="primary" routerLink="/products/create">
+                        <mat-icon>add</mat-icon>
+                        Crear
+                    </button>
+                    <mat-form-field appearance="outline">
+                      <mat-label>Buscar</mat-label>
+                      <input matInput #searchInput placeholder="Escribe para buscar...">
+                    </mat-form-field>
+                </div>
+                <div class="col-12">
+                    <app-list-data *ngIf="items.length > 0" [cols]="columns" 
+                    [items]="items"
+                    [totalItems]="totalItems"
+                    (pageEvent)="onChangePage($event)"></app-list-data>
+                </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

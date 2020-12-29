@@ -1,0 +1,55 @@
+@import '../../../../assets/scss/theme/variables';
+
+.cursor-pointer{
+    cursor: pointer;
+}
+
+.mat-expansion-panel-spacing{
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.reservation-container{
+    height: 88vh;
+    max-height: 88vh;
+    overflow: hidden;
+
+    .reservation-detail, .reservation-payments{
+        max-height: 38%;
+        height: 38%;
+    }
+    .reservation-totals{
+        max-height: 24%;
+        height: 24%;
+    }
+    .reservation-rooms{
+        max-height: 60%;
+        height: 60%;
+    }
+    .reservation-guests{
+        max-height: 40%;
+        height: 40%;
+    }
+    .reservation-products{
+        max-height: 40%;
+        height: 40%;
+    }
+}
+
+.active-panel{
+    border-left: solid 3px $primary-color;
+}
+
+.bordered-card{
+    border-left: solid 3px $primary-color !important;
+}
+
+.scrollable{
+    overflow-y: scroll;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+/* Hide scrollbar for Chrome, Safari and Opera */
+.scrollable::-webkit-scrollbar{
+    display: none;
+}
