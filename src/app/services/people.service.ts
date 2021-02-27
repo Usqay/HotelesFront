@@ -55,4 +55,21 @@ export class PeopleService {
     })
     .pipe(map((data : any) => data.data as People))
   }
+
+  searchApi(type: number, document: string) {
+
+    let route = '';
+
+    if (type == 1) {
+      route = `${environment.apiDni}?documento=${document}`;
+    }
+
+    if (type == 3) {
+      route = `${environment.apiRuc}?documento=${document}`;
+    }
+
+    return this.http.get(route);
+
+  }
+
 }

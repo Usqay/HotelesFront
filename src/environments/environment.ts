@@ -4,8 +4,12 @@
 
 export const environment = {
   production: true,
-  apiUrl : 'http://localhost/hotelesapi/public/api/',
-  filesUrl : 'http://localhost/hotelesapi/public/storage/',
+  // apiUrl : 'http://localhost/hotelesapi/public/api/',
+  // filesUrl : 'http://localhost/hotelesapi/public/storage/',
+  apiDni: 'http://clientapi.sistemausqay.com/dni.php',
+  apiRuc: 'http://clientapi.sistemausqay.com/ruc.php',
+  apiUrl: 'http://localhost/hotelesback/public/api/',
+  filesUrl: 'http://localhost/hotelesback/public/storage/'
 };
 /*
  * For easier debugging in development mode, you can import the following file

@@ -56,9 +56,9 @@ export class ReservationGuestsComponent implements OnInit {
     private peopleService : PeopleService) { }
 
   ngOnInit() {
-    this.createForm()
-    this.getDocumentTypes()
-    this.getGenders()
+    this.createForm();
+    this.getDocumentTypes();
+    this.getGenders();
   }
   
   ngAfterViewInit() {
@@ -102,6 +102,33 @@ export class ReservationGuestsComponent implements OnInit {
       email : this.formBuilder.control(''),
       birthday_date : this.formBuilder.control(''),
     })
+  }
+
+  public searchDocument() {
+    this.alert.loading();
+    const document = this.form.value.document_number;
+    const documentType = this.form.value.document_type_id;
+
+    this.peopleService.searchApi(documentType, document)
+      .subscribe((response: any) => {
+        const person = response;
+        if (person) {
+          if (documentType == 1) {
+            this.form.controls['name'].setValue(person.nombres);
+            this.form.controls['last_name'].setValue(person.apellidos);
+            this.form.controls['email'].setValue(person.email);
+            this.form.controls['address'].setValue(person.direccion);
+          }
+
+          if (documentType == 3) {
+             this.form.controls['full_name'].setValue(person.razon_social);
+          }
+
+          this.alert.hide()
+        }
+      });
+
+
   }
 
   private getDocumentTypes(){

@@ -21,14 +21,14 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class CreateCashRegisterMovementComponent implements OnInit {
 
-  form : FormGroup
-  turnChange : TurnChange
-  cashRegister : CashRegister
-  baseCurrency : Currency
+  form: FormGroup;
+  turnChange: TurnChange = {};
+  cashRegister: CashRegister = {};
+  baseCurrency: Currency = {};
 
-  cashRegisters : CashRegister[] = []
-  currencies : Currency[] = []
-  paymentMethods : PaymentMethod[] = []
+  cashRegisters: CashRegister[] = [];
+  currencies: Currency[] = [];
+  paymentMethods: PaymentMethod[] = [];
   cashRegisterMovementTypes : CashRegisterMovementType[] = [
     {id : 7, name : 'Otro tipo de ingreso'},
     {id : 11, name : 'Otro tipo de salida'}
