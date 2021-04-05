@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-12">
+        <!-- <app-breadcrumb [items]="['Habitaciones']" [active_item]="'Listar'"></app-breadcrumb> -->
+    </div>
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header b-l-primary py-3 d-flex align-items-center w-100 justify-content-between">
+                <h5 class="text-muted">Habitaciones</h5>
+                <button *ngIf="viewMode == 'table'" mat-icon-button matTooltip="Vista en tarjetas"
+                    (click)="viewMode = 'cards'; paginate = 25" color="primary">
+                    <mat-icon>view_module</mat-icon>
+                </button>
+                <button *ngIf="viewMode == 'cards'" mat-icon-button matTooltip="Vista en tabla"
+                    (click)="viewMode = 'table'" color="primary">
+                    <mat-icon>view_list</mat-icon>
+                </button>
+            </div>
+            <div class="card-body py-3" *ngIf="viewMode == 'table'">
+                <button mat-flat-button color="primary" routerLink="/rooms/create">
+                    <mat-icon>add</mat-icon>
+                    Crear
+                </button>
+                <app-list-data *ngIf="items.length > 0" [cols]="columns" [items]="items" [totalItems]="totalItems"
+                    (pageEvent)="onChangePage($event)"></app-list-data>
+            </div>
+            <div class="card-body py-3" *ngIf="viewMode == 'cards'">
+                <app-rooms-card-list [rooms]="items" (reload)="listItems()" [totalItems]="totalItems" (pageEvent)="onChangePage($event)"></app-rooms-card-list>
+            </div>
+        </div>
+    </div>
+</div>

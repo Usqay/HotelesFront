@@ -1,0 +1,57 @@
+<div class="d-flex align-content-between flex-wrap h-100">
+    <div class="row w-100">
+        <div class="col-12 d-flex w-100 align-items-start justify-content-between">
+            <mat-form-field appearance="outline" class="w-50">
+                <mat-label>{{searchFor == 'products' ? 'Buscar productos' : 'Buscar servicios'}}</mat-label>
+                <input matInput placeholder="Escribe algo..." #searchInput>
+            </mat-form-field>
+
+            <mat-button-toggle-group class="mt-1" [(ngModel)]="searchFor">
+                <mat-button-toggle value="products" matTooltip="Productos">
+                    <mat-icon>local_offer</mat-icon>
+                </mat-button-toggle>
+                <mat-button-toggle value="services" matTooltip="Servicios">
+                    <mat-icon>verified</mat-icon>
+                </mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+        <div class="col-12">
+            <div class="row" *ngIf="searchFor == 'products'">
+                <div class="col-12 col-md-4" *ngFor="let item of products">
+                    <div class="card mx-0 my-3 cursor-pointer" [@hover]="item.hoverState ? 'hoverIn' : 'hoverOut'"
+                        (mouseenter)="item.hoverState = !item.hoverState"
+                        (mouseleave)="item.hoverState = !item.hoverState"
+                        (click)="showRoomDetail(item)">
+                        <div class="card-body px-1 py-2 text-center">
+                            <mat-icon>
+                                local_offer
+                            </mat-icon>
+                            <p class="card-text">{{item.name | titlecase}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="searchFor == 'services'">
+                <div class="col-12 col-md-4" *ngFor="let item of services">
+                    <div class="card mx-0 my-3 cursor-pointer" [@hover]="item.hoverState ? 'hoverIn' : 'hoverOut'"
+                        (mouseenter)="item.hoverState = !item.hoverState"
+                        (mouseleave)="item.hoverState = !item.hoverState"
+                        (click)="showRoomDetail(null,item)">
+                        <div class="card-body px-1 py-2 text-center">
+                            <mat-icon>
+                                verified
+                            </mat-icon>
+                            <p class="card-text">{{item.name | titlecase}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row w-100">
+        <div class="col-12">
+            <mat-paginator [length]="totalItems" [pageIndex]="currentPage" hidePageSize [pageSize]="pageSize" (page)="onPaginatorChange($event)">
+            </mat-paginator>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,74 @@
+<!-- <app-breadcrumb [items]="['Reservaciones']" [active_item]="'Crear'"></app-breadcrumb> -->
+
+<div class="reservation-container pt-4">
+  <div class="row h-100">
+    <div class="col-12 col-md-5 col-lg-4 detail-container">
+      <div class="row h-100">
+        <div class="col-12">
+          <mat-accordion>
+
+            <mat-expansion-panel class="shadow-none" (opened)="activePanel = 'time'" [ngClass]="{'active-panel': activePanel == 'time'}" expanded>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Tiempo de estadía {{durationTime.days > 0 ? ': '+durationTime.days+' día(s)' : ': '+durationTime.hours+' hora(s)'}}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <app-reservation-time (reservationTime)="setReservationTimeAndOrigin($event)"></app-reservation-time>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel class="shadow-none" (opened)="activePanel = 'guests'" [ngClass]="{'active-panel': activePanel == 'guests'}">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Huespedes {{reservation.guests.length > 0 ? ': '+reservation.guests.length : ''}}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+
+              <app-reservation-guests (result)="onGuestComponentChange($event)"></app-reservation-guests>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel class="shadow-none" (opened)="activePanel = 'rooms'" [ngClass]="{'active-panel': activePanel == 'rooms'}">
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Habitaciones {{selectedRooms.length > 0 ? ': '+selectedRooms.length : ''}}
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <p *ngIf="selectedRooms.length == 0">Ninguna habitación seleccionada</p>
+              <ul class="list-group list-group-flush" *ngIf="selectedRooms.length > 0">
+                <li class="list-group-item d-flex align-items-center justify-content-between px-0" *ngFor="let item of selectedRooms">
+                  <div>
+                    <p class="mb-1 font-weight-bold">{{item.room.name}} - {{item.room.room_category.name}}</p>
+                    <p class="mb-1">{{item.priceValue | currency:item.currency.symbol}} / {{item.priceType == 'hour' ? 'Por hora' : 'Por día'}}</p>
+                  </div>
+                  <button mat-icon-button color="warn" class="float-right" (click)="deleteRoom(item.room)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </li>
+              </ul>
+            </mat-expansion-panel>
+
+          </mat-accordion>
+
+          <div class="card shadow-none my-1 rounded-0">
+            <div class="card-body py-2 px-4">
+              <div class="d-flex my-2 align-items-center justify-content-between" *ngFor="let item of endPricesByCurrencies">
+                <mat-label>{{item.currency.plural_name}}</mat-label>
+                <mat-label>{{item.amount | currency:item.currency.symbol}}</mat-label>
+              </div>
+              <button class="btn-block my-2" mat-flat-button color="primary" [disabled]="!validReservation()" (click)="submitReservation()">
+                <span class="font-weight-bold">Guardar reservación</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-7 col-lg-8 h-100">
+      <div class="card rounded-sm shadow-sm m-0 h-100">
+        <div class="card-body p-3">
+          <app-reservation-rooms (onAddRoom)="addRoom($event)"></app-reservation-rooms>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

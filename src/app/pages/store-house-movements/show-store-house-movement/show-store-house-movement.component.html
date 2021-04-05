@@ -1,0 +1,48 @@
+<div class="row" *ngIf="storeHouseMovement">
+  <div class="col-12">
+    <!-- <app-breadcrumb [items]="['Movimientos de almacen']" [active_item]="'Detalle'" [back_button]="true" [back_route]="'/store-house-movements'"></app-breadcrumb> -->
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="card">
+      <div class="card-header b-l-primary d-flex align-items-center justify-content-between py-4">
+        <h5 class="text-muted">Datos del movimiento</h5>
+      </div>
+      <div class="card-body pt-0 pb-2">
+        <mat-list *ngIf="storeHouseMovement">
+          <mat-list-item class="h-auto my-2">
+            <mat-icon mat-list-icon>done_all</mat-icon>
+            <div mat-line class="font-weight-bold text-muted">Tipo</div>
+            <div mat-line class="font-weight-normal">{{storeHouseMovement.store_house_movement_type.name}}</div>
+          </mat-list-item>
+          <mat-list-item class="h-auto my-2">
+            <mat-icon mat-list-icon>done_all</mat-icon>
+            <div mat-line class="font-weight-bold text-muted">Descripción</div>
+            <div mat-line class="font-weight-normal">{{storeHouseMovement.description}}</div>
+          </mat-list-item>
+          <mat-list-item class="h-auto my-2">
+            <mat-icon mat-list-icon>done_all</mat-icon>
+            <div mat-line class="font-weight-bold text-muted">Fecha de registro</div>
+            <div mat-line class="font-weight-normal">{{storeHouseMovement.created_at | date:'dd MMM y HH:mm'}}</div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="card">
+      <div class="card-header b-l-primary d-flex align-items-center justify-content-between py-4">
+        <h5 class="text-muted">Productos</h5>
+      </div>
+      <div class="card-body pt-0 pb-2">
+        <mat-list>
+          <mat-list-item *ngFor="let item of storeHouseMovement.products">
+            <mat-icon mat-list-icon>done_all</mat-icon>
+            <div mat-line class="font-weight-bold text-muted">{{item.product.name | titlecase}}</div>
+            <div mat-line class="text-muted"><strong>Cant.:</strong> {{item.quantity | number}}
+            </div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+@import '../../../../assets/scss/theme/variables';
+.cursor-pointer{
+    cursor: pointer;
+}
+
+.mat-expansion-panel-spacing{
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.rooms-container{
+    max-height: 70vh;
+    overflow-y: scroll;
+    align-items: start !important;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+
+    .card-room{
+        cursor: pointer;
+    }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.rooms-container::-webkit-scrollbar {
+    display: none;
+}
+
+.categories-container{
+    height: 3.5rem;
+    width: auto;
+    overflow-x: scroll;
+    .card{
+        display: inline-table;
+    }
+}
+
+.capacity-icon{
+    font-size: 1.2rem !important;
+}
+
+.status-one{
+  border-left: solid 3px $primary-color !important;
+}
+.status-two{
+  border-left: solid 3px $secondary-color !important;
+}
+.status-three{
+  border-left: solid 3px $dark-color !important;
+}

@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="col-12">
+    <form [formGroup]="form" (ngSubmit)="addProduct()" novalidate autocomplete="off">
+      <div class="row">
+        <div class="col-12 col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Producto</mat-label>
+            <input type="text" formControlName="product_name" matInput [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onAutocompleteSelect($event.option.value)" [displayWith]="displayProduct">
+              <mat-option *ngFor="let option of products" [value]="option">
+                {{option.name}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Cantidad</mat-label>
+            <input matInput min="0.1" formControlName="quantity" step="any" type="number">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4 d-flex align-items-center">
+          <button mat-flat-button [disabled]="form.invalid" type="submit" color="primary" class="mb-2">
+            Añadir
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-12">
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">Producto</th>
+          <th scope="col">Cantidad</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of productMovements">
+          <th scope="row">
+            <h6>{{item.product.name}}</h6>
+          </th>
+          <td>
+            <h6>{{item.quantity | number:'.0-2'}}</h6>
+          </td>
+          <td class="pt-0">
+            <button mat-icon-button color="warn" matTooltip="Eliminar" (click)="deleteProduct(item.product_id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-12 text-right">
+    <button class="m-1" mat-button color="primary" (click)="_onCancel()">Cancelar</button>
+    <button [disabled]="productMovements.length == 0" class="m-1" mat-flat-button color="primary" (click)="_onSubmit()">
+      <mat-icon>save</mat-icon>  
+      Guardar
+    </button>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+@import "../../../assets/css/variables";
+
+.container-fluid{
+    // max-height: 100%;
+    // height: 100%;
+    background-image: url('../../../assets/images/logo/login-bg.jpg');
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    background-size: cover;
+
+    .card-login{
+        background: rgba(0,0,0,0);
+        border: none  !important;
+
+    }
+}
+
+.form-control::-webkit-input-placeholder {
+    color: rgba(255,255,255,.5);
+}
+
+input:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: $primary-color;
+}
+
+body, html{
+    max-height: 100vh;
+}
+
+
+.bg-primary {
+  background-color: #0F4B81  !important;
+}

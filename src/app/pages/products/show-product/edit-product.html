@@ -1,0 +1,5 @@
+<h2 mat-dialog-title *ngIf="component == 'product'">Editar información</h2>
+<app-product-form *ngIf="component == 'product'" [product]="product" (onCancel)="onCancel()" (onSubmit)="onSubmit($event)"></app-product-form>
+
+<h2 mat-dialog-title *ngIf="component == 'prices'">Editar precios</h2>
+<app-product-prices-form *ngIf="component == 'prices'" [product]="product" (onCancel)="onCancel()" (onSubmit)="onSubmit($event)"></app-product-prices-form>

@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="col-12">
+    <!-- <app-breadcrumb [items]="['Productos']" [active_item]="'Detalle'" [back_button]="true" [back_route]="'/products'"></app-breadcrumb> -->
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="card">
+      <div class="card-header b-l-primary d-flex align-items-center justify-content-between py-3">
+        <h5 class="text-muted">Datos del producto</h5>
+        <button class="ml-1" mat-icon-button (click)="showEditDialog('product')" matTooltip="Editar información">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+      <div class="card-body pt-0 pb-2">
+        <mat-list *ngIf="product">
+          <mat-list-item class="h-auto my-2">
+            <mat-icon mat-list-icon>done_all</mat-icon>
+            <div mat-line class="font-weight-bold text-muted">Nombre</div>
+            <div mat-line class="font-weight-normal">{{product.name}}</div>
+          </mat-list-item>
+          <mat-list-item class="h-auto my-2">
+            <mat-icon mat-list-icon>done_all</mat-icon>
+            <div mat-line class="font-weight-bold text-muted">Codigo Sunat</div>
+            <div mat-line class="font-weight-normal text-wrap">{{product.sunat_code.code}} - {{product.sunat_code.description}}</div>
+          </mat-list-item>
+          <mat-list-item class="h-auto my-2">
+            <mat-icon mat-list-icon>done_all</mat-icon>
+            <div mat-line class="font-weight-bold text-muted">Descripción</div>
+            <div mat-line class="font-weight-normal text-wrap">{{product.description}}</div>
+          </mat-list-item>
+          <mat-list-item class="h-auto my-2">
+            <mat-icon mat-list-icon>done_all</mat-icon>
+            <div mat-line class="font-weight-bold text-muted">Fecha de registro</div>
+            <div mat-line class="font-weight-normal">{{product.created_at | date:'dd MMM y HH:mm'}}</div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="card">
+      <div class="card-header b-l-primary d-flex align-items-center justify-content-between py-3">
+        <h5 class="text-muted">Precios</h5>
+        <button class="ml-1" mat-icon-button (click)="showEditDialog('prices')" matTooltip="Editar información">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+      <div class="card-body pt-0 pb-2">
+        <mat-list *ngIf="product">
+          <mat-list-item *ngFor="let item of product.prices">
+            <mat-icon mat-list-icon>done_all</mat-icon>
+            <div mat-line class="font-weight-bold text-muted">{{item.currency.name}}</div>
+            <div mat-line class="text-muted"><strong>Compra:</strong> {{item.purchase_price | currency:item.currency.code}}</div>
+            <div mat-line class="text-muted"><strong>Venta:</strong> {{item.sale_price | currency:item.currency.code}}</div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+  </div>
+</div>

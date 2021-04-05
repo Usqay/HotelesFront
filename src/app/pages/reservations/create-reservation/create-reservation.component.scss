@@ -1,0 +1,30 @@
+@import '../../../../assets/scss/theme/variables';
+
+.cursor-pointer{
+    cursor: pointer;
+}
+
+.mat-expansion-panel-spacing{
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.reservation-container{
+    max-height: 100%;
+    height: 100%;
+
+    .detail-container{
+        overflow-y: scroll;
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .detail-container::-webkit-scrollbar{
+        display: none;
+    }
+}
+
+.active-panel{
+    border-left: solid 3px $primary-color;
+}

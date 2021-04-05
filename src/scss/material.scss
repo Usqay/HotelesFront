@@ -1,0 +1,43 @@
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+$primary: (
+ Main:#0F4B81,
+ Light:#007CE8,
+ Dark: #125A9C,
+ contrast: (
+    Main: #fff,
+    Light: #fff,
+    Dark: #fff
+ ));
+
+ $accent: (
+ Main:#EF6A01,
+ Light:#EF9F60,
+ Dark: #EF7718,
+ contrast: (
+    Main: #fff,
+    Light: #fff,
+    Dark: #fff
+ ));
+
+ $warn: (
+ Main:#dc3545,
+ Light:#dc3545,
+ Dark: #dc3545,
+ contrast: (
+    Main: #f5f5f5,
+    Light: #fff,
+    Dark: #fff
+ ));
+
+$hoteles-primary : mat-palette($primary, Main, Light, Dark);
+$hoteles-accent : mat-palette($accent, Main, Light, Dark);
+$hoteles-warn : mat-palette($warn, Main, Light, Dark);
+
+$hoteles-theme: mat-light-theme($hoteles-primary, $hoteles-accent, $hoteles-warn);
+
+@include angular-material-theme($hoteles-theme);
+
+//html, body { height: 100%; }

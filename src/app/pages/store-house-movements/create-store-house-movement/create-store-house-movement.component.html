@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col-12">
+        <!-- <app-breadcrumb [items]="['Movimientos de almacen']" [active_item]="'Crear'" [back_button]="true" [back_route]="'/store-house-movements'"></app-breadcrumb> -->
+    </div>
+
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header b-l-primary py-4 d-flex align-items-center w-100 justify-content-between">
+                <h5 class="text-muted">Crear movimiento</h5>
+            </div>
+            <div class="card-body py-3">
+                <mat-horizontal-stepper  linear #stepper>
+                    <mat-step [completed]="false" label="Datos básicos">
+                        <app-store-house-movement-form (onCancel)="onCancel()" (onSubmit)="onSubmitStoreHouseMovement($event)"></app-store-house-movement-form>
+                    </mat-step>
+                    <mat-step [completed]="false" label="Agrega productos">
+                        <app-store-house-movement-products-form (onCancel)="onCancel()" (onSubmit)="onSubmitProductMovements($event)"></app-store-house-movement-products-form>
+                    </mat-step>
+                </mat-horizontal-stepper>
+            </div>
+        </div>
+    </div>
+</div>

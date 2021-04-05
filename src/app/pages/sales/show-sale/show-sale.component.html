@@ -1,0 +1,101 @@
+<div class="row">
+    <div class="col-12">
+      <!-- <app-breadcrumb [items]="['Ventas']" [active_item]="'Detalle'"></app-breadcrumb> -->
+    </div>
+    <div class="col-12 col-md-6">
+      <div class="card">
+        <div class="card-header b-l-primary d-flex align-items-center justify-content-between py-4">
+          <h5 class="text-muted">Datos de la venta</h5>
+        </div>
+        <div class="card-body pt-0 pb-2">
+          <mat-list *ngIf="sale">
+            <mat-list-item class="h-auto my-2">
+              <mat-icon mat-list-icon>done_all</mat-icon>
+              <div mat-line class="font-weight-bold text-muted">Cliente</div>
+              <div mat-line class="font-weight-normal" *ngIf="sale.client">{{sale.client.people.name}}</div>
+              <div mat-line class="font-weight-normal" *ngIf="!sale.client">Cliente generico</div>
+            </mat-list-item>
+            <mat-list-item class="h-auto my-2">
+              <mat-icon mat-list-icon>done_all</mat-icon>
+              <div mat-line class="font-weight-bold text-muted">Total</div>
+              <div mat-line class="font-weight-normal">{{total | currency:baseCurrency.symbol}}</div>
+            </mat-list-item>
+            <mat-list-item class="h-auto my-2">
+              <mat-icon mat-list-icon>done_all</mat-icon>
+              <div mat-line class="font-weight-bold text-muted">Estado</div>
+              <div mat-line class="font-weight-normal">{{sale.sale_state.name}}</div>
+            </mat-list-item>
+            <mat-list-item class="h-auto my-2">
+              <mat-icon mat-list-icon>done_all</mat-icon>
+              <div mat-line class="font-weight-bold text-muted">Fecha de registro</div>
+              <div mat-line class="font-weight-normal">{{sale.created_at | date:'dd MMM y HH:mm'}}</div>
+            </mat-list-item>
+          </mat-list>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6">
+      <div class="card">
+        <div class="card-header b-l-primary d-flex align-items-center justify-content-between py-4">
+          <h5 class="text-muted">Productos</h5>
+        </div>
+        <div class="card-body pt-0 pb-2">
+          <mat-list *ngIf="sale && sale.products.length > 0">
+            <mat-list-item *ngFor="let item of sale.products">
+              <mat-icon mat-list-icon>done_all</mat-icon>
+              <div mat-line class="font-weight-bold text-muted">{{item.product.name | titlecase}}</div>
+              <div mat-line class="d-flex w-100 justify-content-between align-items-center">
+                  <small class="text-muted">
+                      Cant.: <strong>{{item.quantity}}</strong>
+                  </small>
+                  <small class="text-muted">P. unitario:
+                      <strong>{{item.unit_price | currency:item.currency.symbol}}</strong>
+                  </small>
+                  <small class="text-muted">P. total:
+                      <strong>{{calculateTotalPrice(item) | currency:item.currency.symbol}}</strong>
+                  </small>
+              </div>
+              <div mat-line *ngIf="item.rate_value != 1">
+                  <small class="text-muted">
+                    T. cambio: <strong>{{item.rate_value | currency:baseCurrency.symbol}}</strong>
+                  </small>
+              </div>
+            </mat-list-item>
+          </mat-list>
+          <p class="pt-2" *ngIf="sale && sale.products.length == 0">Ningun producto</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6">
+      <div class="card">
+        <div class="card-header b-l-primary d-flex align-items-center justify-content-between py-4">
+          <h5 class="text-muted">Servicios</h5>
+        </div>
+        <div class="card-body pt-0 pb-2">
+          <mat-list *ngIf="sale && sale.services.length > 0">
+            <mat-list-item *ngFor="let item of sale.services">
+              <mat-icon mat-list-icon>done_all</mat-icon>
+              <div mat-line class="font-weight-bold text-muted">{{item.service.name |titlecase}}</div>
+              <div mat-line class="d-flex w-100 justify-content-between align-items-center">
+                  <small class="text-muted">
+                      Cant.: <strong>{{item.quantity}}</strong>
+                  </small>
+                  <small class="text-muted">P. unitario:
+                      <strong>{{item.unit_price | currency:item.currency.symbol}}</strong>
+                  </small>
+                  <small class="text-muted">P. total:
+                      <strong>{{calculateTotalPrice(item) | currency:item.currency.symbol}}</strong>
+                  </small>
+              </div>
+              <div mat-line *ngIf="item.rate_value != 1">
+                  <small class="text-muted">
+                    T. cambio: <strong>{{item.rate_value | currency:baseCurrency.symbol}}</strong>
+                  </small>
+              </div>
+            </mat-list-item>
+          </mat-list>
+          <p class="pt-2" *ngIf="sale && sale.services.length == 0">Ningun servicio</p>
+        </div>
+      </div>
+    </div>
+  </div>

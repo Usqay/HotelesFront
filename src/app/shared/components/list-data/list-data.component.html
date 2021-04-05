@@ -1,0 +1,40 @@
+<div class="row">
+    <div class="col-12">
+        <table mat-table [dataSource]="items" class="w-100">
+
+            <ng-container *ngFor="let item of cols" [matColumnDef]="item.key">
+                <th mat-header-cell *matHeaderCellDef> {{item.label}} </th>
+                <td mat-cell *matCellDef="let element">
+                    <p *ngIf="item.type == 'string'">{{element[item.key]}}</p>
+                    <p *ngIf="item.type == 'date'">{{element[item.key] | date}}</p>
+                    <p *ngIf="item.type == 'datetime'">{{element[item.key] | date:'dd MMM y HH:mm'}}</p>
+                    <p *ngIf="item.type == 'number'">{{element[item.key] | number:'.0-2'}}</p>
+                    <p *ngIf="item.type == 'currency'">{{element[item.key] | currency:element[item.currency]}}</p>
+                    <p class="badge badge-success" *ngIf="item.type == 'boolean' && element[item.key] == 1">{{item.boolean_options[element[item.key]]}}</p>
+                    <p class="badge badge-danger" *ngIf="item.type == 'boolean' && element[item.key] == 0">{{item.boolean_options[element[item.key]]}}</p>
+
+                    <mat-slide-toggle *ngIf="item.type == 'toggle'" [(ngModel)]="element[item.key]" color="primary" (change)="item.toggleEvent(element.id, $event.checked)"></mat-slide-toggle>
+
+                    <p *ngIf="item.type == 'object'">{{element[item.key][item.subkey]}}</p>
+
+                    <div *ngIf="item.type == 'buttons'">
+                        <button *ngFor="let button of item.buttons" mat-icon-button (click)="button.click(element.id)" [matTooltip]="button.tooltip">
+                            <mat-icon>{{button.icon}}</mat-icon>
+                        </button>
+                    </div>
+
+                    <p *ngIf="item.type == 'flag'">
+                        <span *ngIf="element[item.key]" class="badge badge-primary">{{item.textIfTrue}}</span>
+                        <span *ngIf="!element[item.key]" class="badge badge-secondary">{{item.textIfFalse}}</span>
+                    </p>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="pageSizeOptions"
+        [length]="totalItems"
+        (page)="onChangePage($event)"></mat-paginator>
+    </div>
+</div>

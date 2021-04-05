@@ -1,0 +1,44 @@
+<div class="container-fluid vh-100">
+  <div class="row h-100">
+    <div class="col-12 pl-5 pt-3">
+      <!--<img src="assets/images/logo/logo.svg" class="img-fluid" width="200" alt="Logo">-->
+    </div>
+    <div class="col-12 offset-lg-1 col-md-7 col-lg-5">
+      <div class="card my-0 mx-md-3 card-login shadow-none">
+        <!--<img src="assets/images/logo/usqay-circle-icon.svg" class="d-none d-md-block img-fluid logo-circle mx-auto"
+          width="150" alt="Logo">-->
+        <img src="assets/images/logo/logo.svg" class="d-none d-md-block img-fluid logo-circle mx-auto" width="250"
+          alt="Logo">
+        <div  class="card-body px-4 py-4"> <!--  *ngIf="isDisplayed"  @container-->
+          <form [formGroup]="form" (ngSubmit)="onLogin()" novalidate autocomplete="off">
+            <div class="input-group input-group-lg bg-primary my-3 rounded-pill"> <!-- @enterExitLeft -->
+              <span class="input-group-text text-white border-0 bg-transparent ml-3">
+                <i class="fa fa-envelope fa-lg"></i>
+              </span>
+              <input type="email" formControlName="email"
+                class="form-control bg-transparent text-white border-0 rounded-pill" placeholder="Escribe tu correo">
+            </div>
+
+            <div  class="input-group input-group-lg bg-primary my-3 rounded-pill"><!-- @enterExitRight-->
+              <span class="input-group-text text-white border-0 bg-transparent ml-3">
+                <i class="fa fa-lock fa-lg"></i>
+              </span>
+              <input  type="password"  formControlName="password"
+                class="form-control bg-transparent text-white border-0 rounded-pill"
+                placeholder="Escribe tu contraseña">
+            </div>
+
+            <button type="submit" [disabled]="form.invalid"
+              class="btn btn-secondary mt-3 btn-lg w-100 rounded-pill">Acceder</button>
+          </form>
+          <h6 class="text-center text-muted mt-4 mb-2">
+            Central telefónica: <a href="tel:016429247">(01) 642 9247</a>
+          </h6>
+          <h6 class="text-center text-muted">
+            Visitanos en <a href="http://www.sistemausqay.com" target="_blank">www.sistemausqay.com</a>
+          </h6>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

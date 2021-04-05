@@ -1,0 +1,23 @@
+<div class = "layout-wrapper" [ngClass] = "{'layout-wrapper-menu-active': sidebarActive,
+                                        'layout-overlay-menu': overlay} ">
+
+    <app-topbar> </app-topbar>
+
+    <app-sidebar> </app-sidebar>
+
+    <div class = "layout-content">
+      <div class="pt-4" *ngIf="alerts.length > 0">
+        <div class="alert alert-secondary d-flex align-items-center justify-content-between" *ngFor="let item of alerts">
+          <h4 class="alert-heading cursor-pointer" (click)="navigateTo(item.link)">{{item.title}}!</h4>
+          <mat-icon [matTooltip]="item.info" class="cursor-pointer">
+            info
+          </mat-icon>
+        </div>
+      </div>
+
+        <router-outlet> </router-outlet>
+
+        <!--<app-footer> </app-footer>-->
+    </div>
+
+</div>

@@ -1,0 +1,15 @@
+<div class="row">
+    <div class="col-12">
+        <!-- <app-breadcrumb [items]="['Monedas']" [active_item]="'Crear'" [back_button]="true" [back_route]="'/currencies'"></app-breadcrumb> -->
+    </div>
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header b-l-primary py-4 d-flex align-items-center w-100 justify-content-between">
+                <h5 class="text-muted">Crear moneda</h5>
+            </div>
+            <div class="card-body py-3">
+                <app-currency-form (onCancel)="onCancel()" (onSubmit)="onSubmit($event)"></app-currency-form>
+            </div>
+        </div>
+    </div>
+</div>

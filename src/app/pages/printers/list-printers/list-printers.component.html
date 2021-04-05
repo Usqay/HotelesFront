@@ -1,0 +1,20 @@
+<div class="row">
+    <div class="col-12">
+        <!-- <app-breadcrumb [items]="['Configuración', 'Impresoras']" [active_item]="'Listar'"></app-breadcrumb> -->
+    </div>
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header b-l-primary py-4 d-flex align-items-center w-100 justify-content-between">
+                <h5 class="text-muted">Impresoras</h5>
+            </div>
+            <div class="card-body py-3">
+                <button mat-flat-button color="primary" routerLink="/printers/create">
+                    <mat-icon>add</mat-icon>
+                    Crear
+                </button>
+                <app-list-data *ngIf="items.length > 0" [cols]="columns" [items]="items" [totalItems]="totalItems"
+                    (pageEvent)="onChangePage($event)"></app-list-data>
+            </div>
+        </div>
+    </div>
+</div>

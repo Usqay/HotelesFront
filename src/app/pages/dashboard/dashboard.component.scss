@@ -1,0 +1,112 @@
+@import "../../../assets/scss/theme/variables";
+.media {
+  .media-body {
+    p {
+      color: $theme-body-sub-title-color;
+      .font-Montserrat {
+        color: $theme-body-sub-title-color;
+      }
+    }
+  }
+}
+.ecommerce-widgets {
+  align-items: center;
+  position: relative;
+  .ecommerce-box{
+    width: 60px;
+    height: 60px;
+    &.light-bg-primary{
+    background-color: rgba($primary-color, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    }
+    &.light-bg-danger{
+      background-color: rgba($danger-color, 0.15);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 100%;
+    }
+    &.light-bg-secondary{
+      background-color: rgba($secondary-color, 0.15);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 100%;
+    }
+  }
+
+  .fa-heart{
+    font-size:24px;
+    background: linear-gradient(to right, $primary-color 10%, $info-color 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 2px;
+  }
+}
+.bg-gradient-primary {
+  background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%) !important;
+  color: rgb(255, 255, 255);
+}
+
+.bg-gradient-secondary {
+  background: linear-gradient(87deg, #f7fafc 0, #f7f8fc 100%) !important;
+  color: rgb(255, 255, 255);
+}
+
+.bg-gradient-success {
+  background: #3ca002e3; //linear-gradient(87deg, #2dce89 0, #2dcecc 100%) !important;
+  color: rgb(255, 255, 255);
+}
+
+.bg-gradient-info {
+  background: #00395e; //linear-gradient(87deg, #11cdef 0, #1171ef 100%) !important;
+  color: rgb(255, 255, 255);
+}
+
+.bg-gradient-warning {
+  background: rgb(252, 155, 28);//linear-gradient(87deg, #fb6340 0, #fbb140 100%) !important;
+  color: rgb(255, 255, 255);
+
+}
+
+.bg-gradient-danger {
+  background: #df0c0cfd ;//linear-gradient(87deg, #f75a5f 0, #c42e4cfd 100%) !important;
+  color: rgb(255, 255, 255);
+
+}
+
+.bg-gradient-light {
+  background: linear-gradient(87deg, #adb5bd 0, #adaebd 100%) !important
+}
+
+.bg-gradient-dark {
+  background: linear-gradient(87deg, #212529 0, #212229 100%) !important
+}
+
+.bg-gradient-default {
+  background: linear-gradient(87deg, #172b4d 0, #1a174d 100%) !important
+}
+
+.bg-gradient-white {
+  background: linear-gradient(87deg, #fff 0, #fff 100%) !important
+}
+
+.bg-gradient-neutral {
+  background: linear-gradient(87deg, #fff 0, #fff 100%) !important
+}
+
+.bg-gradient-darker {
+  background: linear-gradient(87deg, #000 0, #000 100%) !important
+}
+.card {
+  //height: 110px !important;
+  padding: 10px !important ;
+}
+.card .card-body {
+  padding: 0px !important ;
+  background-color: transparent;
+
+}

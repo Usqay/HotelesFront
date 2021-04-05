@@ -1,0 +1,49 @@
+<form [formGroup]="form" (ngSubmit)="_onSubmit()" novalidate autocomplete="off">
+  <div class="row">
+    <div class="col-12 col-md-4">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Tipo de movimiento de almacen</mat-label>
+        <mat-select #storeHouseSelect formControlName="store_house_movement_type_id">
+          <mat-option *ngFor="let item of storeHouseMovementTypes" [value]="item.id">
+            {{item.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-4">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Almacén {{storeHouseSelect.value == 3 ? 'origen' : ''}}</mat-label>
+        <mat-select formControlName="store_house_id">
+          <mat-option *ngFor="let item of storeHouses" [value]="item.id">
+            {{item.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-4" *ngIf="storeHouseSelect.value == 3">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Almacén destino</mat-label>
+        <mat-select formControlName="second_store_house_id">
+          <mat-option *ngFor="let item of storeHouses" [value]="item.id">
+            {{item.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-12 col-md-4">
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Descripción</mat-label>
+        <input matInput formControlName="description">
+      </mat-form-field>
+    </div>
+    <div class="col-12 text-right">
+      <button mat-button color="primary" type="button" (click)="_onCancel()" class="m-1">
+        Cancelar
+      </button>
+      <button mat-flat-button type="submit" [disabled]="form.invalid" color="primary" class="m-1">
+        Siguiente
+        <mat-icon>keyboard_arrow_right</mat-icon>
+      </button>
+    </div>
+  </div>
+</form>

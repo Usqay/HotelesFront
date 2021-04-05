@@ -3,7 +3,13 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  //apiUrl : 'http://arenablancapi.hoteles.sistemausqay.com/api/',
+  //filesUrl: 'http://arenablancapi.hoteles.sistemausqay.com/storage/',
+  apiDni: 'http://clientapi.sistemausqay.com/dni.php',
+  apiRuc: 'http://clientapi.sistemausqay.com/ruc.php',
+  apiUrl: 'http://localhost/hotel/public/api/',
+  filesUrl: 'http://localhost/hotel/public/storage/'
 };
 
 /*

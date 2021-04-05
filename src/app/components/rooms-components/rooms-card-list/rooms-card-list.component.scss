@@ -1,0 +1,21 @@
+@import '../../../../assets/scss/theme/variables';
+
+.cursor-pointer{
+    cursor: pointer;
+}
+
+input:focus {
+    outline: none;
+    box-shadow: none;
+    border-color: $primary-color;
+}
+
+.status-one{
+    border-left: solid 3px $primary-color !important;
+}
+.status-two{
+    border-left: solid 3px $secondary-color !important;
+}
+.status-three{
+    border-left: solid 3px $dark-color !important;
+}

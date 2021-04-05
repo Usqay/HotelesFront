@@ -1,0 +1,89 @@
+<div class="row">
+    <div class="col-12">
+        <!-- <app-breadcrumb [items]="['Reportes']" [active_item]="'Reporte de ventas'"></app-breadcrumb> -->
+    </div>
+    <div class="col-12 mb-4">
+        <mat-accordion>
+            <mat-expansion-panel class="shadow-sm">
+                <mat-expansion-panel-header>
+                    <mat-panel-title class="font-weight-bold text-muted text-uppercase">
+                        <span><i class="fa fa-sliders"></i> Filtros</span>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <form [formGroup]="filtersForm" (keydown.enter)="$event.preventDefault()" novalidate autocomplete="off">
+                    <div class="row">
+                        <div class="col-12 col-md-3">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Desde</mat-label>
+                                <input matInput formControlName="start_date" [matDatepicker]="StartPicker">
+                                <mat-datepicker-toggle matSuffix [for]="StartPicker"></mat-datepicker-toggle>
+                                <mat-datepicker #StartPicker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12 col-md-3">
+                            <mat-form-field appearance="outline" class="w-100">
+                                <mat-label>Hasta</mat-label>
+                                <input matInput formControlName="end_date" [matDatepicker]="EndPicker">
+                                <mat-datepicker-toggle matSuffix [for]="EndPicker"></mat-datepicker-toggle>
+                                <mat-datepicker #EndPicker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </form>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <div class="col-12 col-md-7" *ngIf="salesHistoryChartOptions">
+        <div class="card shadow-sm rounded-sm">
+            <div class="card-header px-4 pt-3 pb-1 text-center">
+                <h6 class="card-title">Ingresos por ventas</h6>
+            </div>
+            <div class="card-body p-3">
+                <apx-chart [series]="salesHistoryChartOptions.series" [chart]="salesHistoryChartOptions.chart"
+                    [dataLabels]="salesHistoryChartOptions.dataLabels"
+                    [plotOptions]="salesHistoryChartOptions.plotOptions" [yaxis]="salesHistoryChartOptions.yaxis"
+                    [xaxis]="salesHistoryChartOptions.xaxis" [fill]="salesHistoryChartOptions.fill"
+                    [title]="salesHistoryChartOptions.title"></apx-chart>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-5" *ngIf="salesPerPaymentMethodOptions">
+        <div class="card shadow-sm rounded-sm">
+            <div class="card-header px-4 pt-3 pb-1 text-center">
+                <h6 class="card-title">Ventas x Medio de pago</h6>
+            </div>
+            <div class="card-body p-3">
+                <apx-chart [series]="salesPerPaymentMethodOptions.series" [chart]="salesPerPaymentMethodOptions.chart"
+                    [plotOptions]="salesPerPaymentMethodOptions.plotOptions" [labels]="salesPerPaymentMethodOptions.labels"
+                    [legend]="salesPerPaymentMethodOptions.legend" [colors]="salesPerPaymentMethodOptions.colors"
+                    [responsive]="salesPerPaymentMethodOptions.responsive"></apx-chart>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6" *ngIf="productsTopChartOptions">
+        <div class="card shadow-sm rounded-sm">
+            <div class="card-header px-4 pt-3 pb-1 text-center">
+                <h6 class="card-title">Productos más vendidos</h6>
+            </div>
+            <div class="card-body p-3">
+                <apx-chart [series]="productsTopChartOptions.series" [chart]="productsTopChartOptions.chart"
+                    [labels]="productsTopChartOptions.labels" [title]="productsTopChartOptions.title"
+                    [theme]="productsTopChartOptions.theme" [responsive]="productsTopChartOptions.responsive">
+                </apx-chart>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6" *ngIf="servicesTopChartOptions">
+        <div class="card shadow-sm rounded-sm">
+            <div class="card-header px-4 pt-3 pb-1 text-center">
+                <h6 class="card-title">Servicios más vendidos</h6>
+            </div>
+            <div class="card-body p-3">
+                <apx-chart [series]="servicesTopChartOptions.series" [chart]="servicesTopChartOptions.chart"
+                    [labels]="servicesTopChartOptions.labels" [title]="servicesTopChartOptions.title"
+                    [theme]="servicesTopChartOptions.theme" [responsive]="servicesTopChartOptions.responsive">
+                </apx-chart>
+            </div>
+        </div>
+    </div>
+</div>

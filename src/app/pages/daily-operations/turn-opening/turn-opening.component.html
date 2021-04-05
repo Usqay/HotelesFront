@@ -1,0 +1,65 @@
+<!-- <app-breadcrumb [items]="['Operaciones diarias']" [active_item]="'Apertura de turno'"></app-breadcrumb> -->
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-header b-l-primary py-4 d-flex align-items-center w-100 justify-content-between">
+        <h5 class="text-muted">Apertura de turno: {{today | date}}</h5>
+      </div>
+      <div class="card-body py-3">
+        <form [formGroup]="form" novalidate autocomplete="off">
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Caja</mat-label>
+                <mat-select formControlName="cash_register_id">
+                  <mat-option *ngFor="let item of cashRegisters" [value]="item.id">{{item.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Turno</mat-label>
+                <mat-select formControlName="turn_id">
+                  <mat-option *ngFor="let item of turns" [value]="item.id">{{item.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Monto inicial en {{apiEnviroments.base_currency.plural_name}}</mat-label>
+                <input matInput type="number" formControlName="start_amount" min="0" value="0">
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+
+        <div *ngFor="let item of currencies" class="row">
+          <div class="col-12 col-md-4">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Moneda</mat-label>
+              <input matInput readonly [value]="item.name">
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-4">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Tipo de cambio {{item.code}}/{{apiEnviroments.base_currency.code}}</mat-label>
+              <input matInput type="number" min="0" [(ngModel)]="item.today_rate">
+            </mat-form-field>
+          </div>
+          <div class="col-12 col-md-4">
+            <mat-form-field appearance="outline" class="w-100">
+              <mat-label>Monto inicial en {{item.plural_name}}</mat-label>
+              <input matInput type="number" min="0" [(ngModel)]="item.start_amount">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="text-right">
+          <button mat-flat-button color="primary" (click)="onSubmit()" [disabled]="form.invalid">
+            <mat-icon>save</mat-icon>
+            Guardar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

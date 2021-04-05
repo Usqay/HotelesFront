@@ -1,0 +1,90 @@
+<div class="row">
+  <div class="col-12">
+    <!-- <app-breadcrumb [items]="['Habitaciones']" [active_item]="'Detalle'" [back_button]="true" [back_route]="'/rooms'"></app-breadcrumb> -->
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="card">
+      <div class="card-header b-l-primary d-flex align-items-center justify-content-between py-3">
+        <h5 class="text-muted">Datos de la habitación</h5>
+        <button class="ml-1" mat-icon-button (click)="showEditDialog('room')" matTooltip="Editar información">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+      <div class="card-body pt-0 pb-2">
+        <mat-list *ngIf="room">
+          <mat-list-item class="h-auto my-2">
+            <mat-icon mat-list-icon>done_all</mat-icon>
+            <div mat-line class="font-weight-bold text-muted">Nombre</div>
+            <div mat-line class="font-weight-normal">{{room.name}}</div>
+          </mat-list-item>
+          <mat-list-item class="h-auto my-2">
+            <mat-icon mat-list-icon>done_all</mat-icon>
+            <div mat-line class="font-weight-bold text-muted">Descripción</div>
+            <div mat-line class="font-weight-normal">{{room.description}}</div>
+          </mat-list-item>
+          <mat-list-item class="h-auto my-2">
+            <mat-icon mat-list-icon>done_all</mat-icon>
+            <div mat-line class="font-weight-bold text-muted">Capacidad</div>
+            <div mat-line class="font-weight-normal">{{room.capacity}} Persona(s)</div>
+          </mat-list-item>
+          <mat-list-item class="h-auto my-2">
+            <mat-icon mat-list-icon>done_all</mat-icon>
+            <div mat-line class="font-weight-bold text-muted">Categoría</div>
+            <div mat-line class="font-weight-normal">{{room.room_category.name}}</div>
+          </mat-list-item>
+          <mat-list-item class="h-auto my-2">
+            <mat-icon mat-list-icon>done_all</mat-icon>
+            <div mat-line class="font-weight-bold text-muted">Estado</div>
+            <div mat-line class="font-weight-normal">{{room.room_status.name}}</div>
+          </mat-list-item>
+          <mat-list-item class="h-auto my-2">
+            <mat-icon mat-list-icon>done_all</mat-icon>
+            <div mat-line class="font-weight-bold text-muted">Fecha de registro</div>
+            <div mat-line class="font-weight-normal">{{room.created_at | date:'dd MMM y HH:mm'}}</div>
+          </mat-list-item>
+        </mat-list>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="card">
+      <div class="card-header b-l-primary d-flex align-items-center justify-content-between py-3">
+        <h5 class="text-muted">Precios</h5>
+        <button class="ml-1" mat-icon-button (click)="showEditDialog('prices')" matTooltip="Editar información">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+      <div class="card-body pt-0 pb-2">
+        <mat-list *ngIf="room && room.room_prices.length > 0">
+          <mat-list-item *ngFor="let item of room.room_prices">
+            <mat-icon mat-list-icon>done_all</mat-icon>
+            <div mat-line class="font-weight-bold text-muted">{{item.currency.name}}</div>
+            <div mat-line class="text-muted"><strong>Día:</strong> {{item.day_price | currency:item.currency.code}}</div>
+            <div mat-line class="text-muted"><strong>Hora:</strong> {{item.hour_price | currency:item.currency.code}}</div>
+          </mat-list-item>
+        </mat-list>
+        <p class="pt-2" *ngIf="room && room.room_prices.length == 0">Ningun insumo</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-md-6">
+    <div class="card">
+      <div class="card-header b-l-primary d-flex align-items-center justify-content-between py-3">
+        <h5 class="text-muted">Productos</h5>
+        <button class="ml-1" mat-icon-button (click)="showEditDialog('products')" matTooltip="Editar información">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </div>
+      <div class="card-body pt-0 pb-2">
+        <mat-list *ngIf="room && room.room_products.length > 0">
+          <mat-list-item *ngFor="let item of room.room_products">
+            <mat-icon mat-list-icon>done_all</mat-icon>
+            <div mat-line class="font-weight-bold text-muted">{{item.product.name | titlecase}}</div>
+            <div mat-line class="text-muted"><strong>Cantidad:</strong> {{item.quantity | number:'.0-2'}}</div>
+          </mat-list-item>
+        </mat-list>
+        <p class="pt-2" *ngIf="room && room.room_products.length == 0">Ningun insumo</p>
+      </div>
+    </div>
+  </div>
+</div>

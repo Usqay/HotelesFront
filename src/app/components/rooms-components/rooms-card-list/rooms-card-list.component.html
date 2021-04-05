@@ -1,0 +1,238 @@
+<div class="row" *ngIf="!activeRoom">
+    <div class="col-12">
+        <div class="text-center" *ngIf="rooms.length == 0">
+            No hay habitaciones registradas.
+        </div>
+        <div class="row rooms-container pt-2" *ngIf="rooms.length > 0">
+            <div class="col-12 col-md-4 col-lg-3" *ngFor="let item of rooms">
+                <div class="card cursor-pointer" [@hover]="item.hoverState ? 'hoverIn' : 'hoverOut'"
+                    (mouseenter)="item.hoverState = !item.hoverState" (mouseleave)="item.hoverState = !item.hoverState"
+                    (click)="openReservationDialog(item)" [matTooltip]="item.room_status.name"
+                    [ngClass]="{'status-one': item.room_status_id == 1, 'status-two' : item.room_status_id == 2, 'status-three' : item.room_status_id == 3}">
+                    <div class="card-body text-center py-3 px-2">
+                        <mat-icon *ngIf="item.room_status_id == 1">meeting_room</mat-icon>
+                        <mat-icon *ngIf="item.room_status_id == 2">watch_later</mat-icon>
+                        <mat-icon *ngIf="item.room_status_id == 3">no_meeting_room</mat-icon>
+                        <p class="mb-1">{{item.name}} - {{item.room_category.name}}</p>
+                        <p><i class="mdi mdi-human-male-female capacity-icon"></i> {{item.capacity}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <mat-paginator (page)="onChangePage($event)" [length]="totalItems" [pageSizeOptions]="[5, 10, 25, 100]">
+                </mat-paginator>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" (keydown.enter)="$event.preventDefault()" novalidate autocomplete="off">
+    <div class="row" *ngIf="activeRoom">
+        <div class="col-12 mb-2">
+            <h6 class="card-subtitle text-muted">Datos de la habitación</h6>
+        </div>
+        <div class="col-12 col-md-4">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Habitación</mat-label>
+                <input matInput readonly [value]="activeRoom.name">
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-2">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Capacidad</mat-label>
+                <input matInput readonly [value]="activeRoom.capacity">
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-3">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Modalidad</mat-label>
+                <mat-select #priceTypeSelect formControlName="room_price_type">
+                    <mat-option value="day">
+                        Día
+                    </mat-option>
+                    <mat-option value="hour">
+                        Hora
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-3">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Precio</mat-label>
+                <mat-select *ngIf="priceTypeSelect.value == 'day'" (selectionChange)="setPriceAndCurrency('day', $event.value)">
+                    <mat-option *ngFor="let item of activeRoom.room_prices" [value]="item">
+                        {{item.day_price | currency:item.currency.symbol}}
+                    </mat-option>
+                    <mat-option value="0">Otro</mat-option>
+                </mat-select>
+
+                <mat-select *ngIf="priceTypeSelect.value == 'hour'" (selectionChange)="setPriceAndCurrency('hour', $event.value)">
+                    <mat-option *ngFor="let item of activeRoom.room_prices" [value]="item">
+                        {{item.hour_price | currency:item.currency.symbol}}
+                    </mat-option>
+                    <mat-option value="0">Otro</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-3" *ngIf="customRoomPrice">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Moneda</mat-label>
+                <mat-select formControlName="room_price_currency_id" >
+                    <mat-option *ngFor="let item of currencies" [value]="item.id">
+                        {{item.plural_name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-3" *ngIf="customRoomPrice">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Precio personalizado</mat-label>
+                <input matInput type="number" formControlName="room_price_value">
+            </mat-form-field>
+        </div>
+        <div class="col-12 d-none">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Descripción</mat-label>
+                <textarea matInput readonly [value]="activeRoom.description"></textarea>
+            </mat-form-field>
+        </div>
+
+        <div class="col-12 mb-2">
+            <h6 class="card-subtitle text-muted">Datos de alquiler</h6>
+        </div>
+        <div class="col-12 mb-2">
+          <mat-checkbox  color="primary" formControlName="mark_checking">Marcar checking</mat-checkbox>
+        </div>
+        <div class="col-12 col-md-6">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Ingreso </mat-label>
+                <input matInput [ngxMatDatetimePicker]="pickerIn" [min]="_today" formControlName="start_date"
+                    placeholder="Ingrego" disabled>
+                <mat-datepicker-toggle matSuffix [for]="pickerIn">
+                </mat-datepicker-toggle>
+                <ngx-mat-datetime-picker #pickerIn [defaultTime]="[12,0,0]" disabled="false">
+                </ngx-mat-datetime-picker>
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Salida</mat-label>
+                <input matInput [ngxMatDatetimePicker]="pickerOut" [min]="form.controls['start_date'].value"
+                    formControlName="end_date" placeholder="Salida" disabled>
+                <mat-datepicker-toggle matSuffix [for]="pickerOut">
+                </mat-datepicker-toggle>
+                <ngx-mat-datetime-picker #pickerOut [defaultTime]="[12,0,0]" disabled="false">
+                </ngx-mat-datetime-picker>
+            </mat-form-field>
+        </div>
+        <div class="col-12 mb-2">
+            <h6 class="card-subtitle text-muted">Datos del cliente</h6>
+        </div>
+        <div class="col-12 col-md-3">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Tipo Doc.</mat-label>
+                <mat-select formControlName="people_document_type_id">
+                    <mat-option *ngFor="let item of documentTypes" [value]="item.id">{{item.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-3">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>N° Doc.</mat-label>
+                <input matInput formControlName="people_document_number" #documentNumber (keyup.enter)="getPeople(documentNumber.value)">
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6" *ngIf="form.controls['people_document_type_id'].value == 3">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Raz. Social</mat-label>
+                <input matInput formControlName="people_full_name">
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6" *ngIf="form.controls['people_document_type_id'].value != 3">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Nombres</mat-label>
+                <input matInput formControlName="people_name">
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6" *ngIf="form.controls['people_document_type_id'].value != 3">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Apellidos</mat-label>
+                <input matInput formControlName="people_last_name">
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-3" *ngIf="form.controls['people_document_type_id'].value != 3">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Genero.</mat-label>
+                <mat-select formControlName="people_gender_id">
+                    <mat-option *ngFor="let item of genders" [value]="item.id">{{item.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-12 mb-2">
+            <h6 class="card-subtitle text-muted">Datos de pago</h6>
+        </div>
+        <div class="col-12 mb-2">
+          <mat-checkbox #createPayment formControlName="create_payment" color="primary">Registrar pago</mat-checkbox>
+        </div>
+        <div class="col-12 col-md-3">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Método de pago</mat-label>
+                <mat-select [disabled]="!createPayment.checked" formControlName="payment_method_id">
+                    <mat-option *ngFor="let item of paymentMethods" [value]="item.id">{{item.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-3">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Tipo de comprobante</mat-label>
+                <mat-select [disabled]="!createPayment.checked" formControlName="payment_document_type">
+                    <mat-option value="not">Nota de venta</mat-option>
+                    <mat-option value="bol">Boleta</mat-option>
+                    <mat-option value="fac">Factura</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-3">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Monto ({{baseCurrency.symbol}})</mat-label>
+                <input matInput [readonly]="!createPayment.checked" type="number" [value]="endPrice" formControlName="payment_amount">
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-3">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Paga con {{baseCurrency.symbol}}</mat-label>
+                <input matInput [readonly]="!createPayment.checked" type="number" [value]="endPrice" formControlName="payment_total">
+            </mat-form-field>
+        </div>
+        <div class="col-12 mb-2">
+          <mat-checkbox *ngIf="createPayment.checked" formControlName="print_payment" color="primary">Generar impresión</mat-checkbox>
+        </div>
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="card-text font-weight-bold my-0">Tiempo de estadía</p>
+                <p class="card-text font-weight-bold my-0" *ngIf="totalHours >= 24">{{totalDays}} días</p>
+                <p class="card-text font-weight-bold my-0" *ngIf="totalHours < 24">{{totalHours}} horas</p>
+            </div>
+            <div class="d-flex justify-content-between align-items-center" *ngIf="rateValue != 1">
+                <p class="card-text font-weight-bold my-0">Tipo de cambio</p>
+                <p class="card-text font-weight-bold my-0">{{rateValue | currency:baseCurrency.symbol}}</p>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+                <p class="card-text font-weight-bold my-0">Total a pagar</p>
+                <p class="card-text font-weight-bold my-0">{{endPrice | currency:baseCurrency.symbol}}</p>
+            </div>
+            <div class="d-flex justify-content-between align-items-center" *ngIf="paymentBack > 0 && createPayment.checked">
+                <p class="card-text font-weight-bold my-0">Vuelto</p>
+                <p class="card-text font-weight-bold my-0">{{paymentBack | currency:baseCurrency.symbol}}</p>
+            </div>
+        </div>
+
+        <div class="col-12 text-right">
+            <button mat-button type="button" color="primary" class="m-1" (click)="activeRoom = null; createForm()">Cancelar</button>
+            <button mat-flat-button type="submit" [disabled]="form.invalid" color="primary" class="m-1">
+                <mat-icon>save</mat-icon>
+                Guardar
+            </button>
+        </div>
+    </div>
+</form>

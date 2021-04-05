@@ -1,0 +1,70 @@
+<form [formGroup]="form" class="w-100 m-0" (ngSubmit)="onSubmit()" novalidate autocomplete="off">
+    <div class="row w-100 m-0 pt-2">
+        <div class="col-12 col-md-6 pr-1">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Tipo Doc.</mat-label>
+                <mat-select formControlName="document_type_id">
+                    <mat-option *ngFor="let item of documentTypes" [value]="item.id">{{item.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6 pr-1 pl-0">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>N° Doc.</mat-label>
+                <input matInput #documentNumber formControlName="document_number" (keyup.enter)="getPeople(documentNumber.value)">
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-12 pr-1" *ngIf="form.controls['document_type_id'].value == 3">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Raz. Social</mat-label>
+                <input matInput formControlName="full_name">
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6 pr-1" *ngIf="form.controls['document_type_id'].value != 3">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Nombres</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6 pr-1 pl-0" *ngIf="form.controls['document_type_id'].value != 3">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Apellidos</mat-label>
+                <input matInput formControlName="last_name">
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6 pr-1" *ngIf="form.controls['document_type_id'].value != 3">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Genero.</mat-label>
+                <mat-select formControlName="gender_id">
+                    <mat-option *ngFor="let item of genders" [value]="item.id">{{item.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6 pr-1 d-none" [ngClass]="{'pl-0': form.controls['document_type_id'].value != 3}">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Telf.</mat-label>
+                <input matInput formControlName="phone_number">
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6 pr-1 d-none" [ngClass]="{'pl-0': form.controls['document_type_id'].value == 3}">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Correo</mat-label>
+                <input matInput formControlName="email">
+            </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6 pr-1 pl-0 d-none" *ngIf="form.controls['document_type_id'].value != 3">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Cumpleaños</mat-label>
+                <input matInput [matDatepicker]="birthdayPicker" formControlName="birthday_date" disabled>
+                <mat-datepicker-toggle matSuffix [for]="birthdayPicker"></mat-datepicker-toggle>
+                <mat-datepicker #birthdayPicker disabled="false"></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-12 d-none">
+            <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Dirección</mat-label>
+                <input matInput formControlName="address">
+            </mat-form-field>
+        </div>
+    </div>
+</form>

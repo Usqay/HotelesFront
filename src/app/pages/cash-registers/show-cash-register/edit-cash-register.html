@@ -1,0 +1,2 @@
+<h2 mat-dialog-title *ngIf="component == 'cashRegister'">Editar información</h2>
+<app-cash-register-form *ngIf="component == 'cashRegister'" [cashRegister]="cashRegister" (onCancel)="onCancel()" (onSubmit)="onSubmit($event)"></app-cash-register-form>

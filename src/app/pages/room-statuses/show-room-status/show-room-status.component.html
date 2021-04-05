@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-12">
+      <!-- <app-breadcrumb [items]="['Estados de habitación']" [active_item]="'Detalle'" [back_button]="true" [back_route]="'/room-statuses'"></app-breadcrumb> -->
+  </div>
+  <div class="col-12">
+      <div class="card">
+          <div class="card-header b-l-primary py-4 d-flex align-items-center w-100 justify-content-between">
+              <button mat-icon-button (click)="showEditDialog()" matTooltip="Editar información">
+                <mat-icon>edit</mat-icon>
+              </button>
+                <h5 class="text-muted">Datos del estado de habitación</h5>
+          </div>
+          <div class="card-body py-3">
+            <mat-list *ngIf="roomStatus">
+                <mat-list-item class="h-auto my-2">
+                  <mat-icon mat-list-icon>done_all</mat-icon>
+                  <div mat-line class="font-weight-bold text-muted">Nombre</div>
+                  <div mat-line class="font-weight-normal">{{roomStatus.name}}</div>
+                </mat-list-item>
+                <mat-list-item class="h-auto my-2">
+                  <mat-icon mat-list-icon>done_all</mat-icon>
+                  <div mat-line class="font-weight-bold text-muted">Fecha de registro</div>
+                  <div mat-line class="font-weight-normal">{{roomStatus.created_at | date:'dd MMM y HH:mm'}}</div>
+                </mat-list-item>
+            </mat-list>
+          </div>
+      </div>
+  </div>
+</div>

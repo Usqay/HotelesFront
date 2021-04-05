@@ -1,0 +1,8 @@
+<h2 mat-dialog-title *ngIf="component == 'room'">Editar información</h2>
+<app-room-form *ngIf="component == 'room'" [room]="room" (onCancel)="onCancel()" (onSubmit)="onSubmit($event)"></app-room-form>
+
+<h2 mat-dialog-title *ngIf="component == 'prices'">Editar precios</h2>
+<app-room-prices-form *ngIf="component == 'prices'" [room]="room" (onCancel)="onCancel()" (onSubmit)="onSubmit($event)"></app-room-prices-form>
+
+<h2 mat-dialog-title *ngIf="component == 'products'">Editar insumos</h2>
+<app-room-products-form *ngIf="component == 'products'" [room]="room" (onReload)="reload = $event; onCancel()"></app-room-products-form>
