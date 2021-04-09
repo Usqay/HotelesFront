@@ -55,4 +55,10 @@ export class ElectronicVoucherService {
     })
     .pipe(map((data : any) => data.data as ElectronicVoucher))
   }
+
+  print(datos){
+    return this.http.post(`${environment.apiUrl}electronic-vouchers/imprimir`,datos,{
+      headers : this.headers
+    })
+  }
 }

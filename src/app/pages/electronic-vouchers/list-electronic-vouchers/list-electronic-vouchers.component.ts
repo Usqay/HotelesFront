@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { debounceTime, distinctUntilChanged, filter, tap } from 'rxjs/operators';
+import { Component, OnInit, ViewChild ,ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { Currency } from 'src/app/shared/interfaces/currency';
@@ -6,6 +7,7 @@ import { ElectronicVoucher } from 'src/app/shared/interfaces/electronic-voucher'
 import { AlertService } from 'src/app/shared/services/alert.service';
 import { ElectronicVoucherService } from 'src/app/shared/services/electronic-voucher.service';
 import { UserService } from 'src/app/shared/services/user.service';
+import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-list-electronic-vouchers',
@@ -13,12 +15,14 @@ import { UserService } from 'src/app/shared/services/user.service';
   styleUrls: ['./list-electronic-vouchers.component.scss']
 })
 export class ListElectronicVouchersComponent implements OnInit {
-
+  @ViewChild('searchInput') searchInput: ElementRef;
   items : ElectronicVoucher[] = []
   totalItems = 0
   page = 1
   paginate = 25
   itemsSubscription : Subscription = null
+  printSubscription : Subscription = null
+  searchProductsSubscription : Subscription = null
   baseCurency : Currency
 
   columns = [
@@ -44,6 +48,12 @@ export class ListElectronicVouchersComponent implements OnInit {
       type : 'string',
     },
     {
+      key : 'api_body',
+      subkey : 'cliente_denominacion',
+      label : 'Cliente',
+      type : 'object',
+    },
+    {
       key : 'serie',
       label : 'Serie',
       type : 'string',
@@ -53,6 +63,34 @@ export class ListElectronicVouchersComponent implements OnInit {
       label : 'Total',
       type : 'string',
     },
+    {
+      key : 'options',
+      label : '',
+      type : 'buttons',
+      buttons : [
+        {
+          icon : 'picture_as_pdf',
+          tooltip : 'Ver  PDF',
+          click : (value) => {
+            this.onShowPDF(value)
+          }
+        },
+        {
+          icon : 'file_copy',
+          tooltip : 'Ver XML',
+          click : (value) => {
+            this.onShowXML(value)
+          }
+        },
+        {
+          icon : 'local_printshop',
+          tooltip : 'Imprimir documento',
+          click : (value) => {
+            this.onPrint(value)
+          }
+        }
+      ]
+    }
   ];
 
   constructor(private electronicVouchersService : ElectronicVoucherService,
@@ -65,8 +103,24 @@ export class ListElectronicVouchersComponent implements OnInit {
     this.listItems()
   }
 
+  ngAfterViewInit() {
+    this.searchProductsSubscription = fromEvent(this.searchInput.nativeElement, 'keyup')
+      .pipe(
+        filter(Boolean),
+        debounceTime(500),
+        distinctUntilChanged(),
+        tap((text) => {
+          const aux = this.searchInput.nativeElement.value
+          this.listItems(aux)
+        })
+      )
+      .subscribe();
+  }
+
   ngOnDestroy(){
     if(this.itemsSubscription != null) this.itemsSubscription.unsubscribe()
+    if(this.printSubscription != null) this.itemsSubscription.unsubscribe()
+    if(this.searchProductsSubscription != null) this.searchProductsSubscription.unsubscribe()
   }
 
   listItems(q = null){
@@ -76,11 +130,14 @@ export class ListElectronicVouchersComponent implements OnInit {
       this.items = data.data.map(i => {
         return {
           ...i,
-          total : this.baseCurency.symbol + JSON.parse(i.api_body).total
+          total : this.baseCurency.symbol + (i.api_body).total
         }
+        
       })
       this.totalItems = data.meta.total
       this.alert.hide()
+   
+      
     }, error => {
       this.alert.error('Ooops', 'No se pudo cargar la información');
     })
@@ -92,7 +149,32 @@ export class ListElectronicVouchersComponent implements OnInit {
     this.listItems()
   }
 
-  onShow(itemId){
-    this.router.navigate(['/electronic-vouchers/show', itemId]);
+  onShowPDF(itemId){
+    let resultado=this.items as any
+    let datos =resultado.find(res =>res.id == itemId);
+    window.open(JSON.parse(datos.api_response).enlace_del_pdf,'_new')
+  }
+  onShowXML(itemId){
+    let resultado=this.items as any
+    let datos =resultado.find(res =>res.id == itemId);
+    window.open(JSON.parse(datos.api_response).enlace_del_xml,'_new')
+  }
+  onPrint(itemId){
+    let resultado=this.items as any
+    let datos =resultado.find(res =>res.id == itemId);
+    let res=(JSON.stringify(datos.api_body));
+    this.printSubscription = this.electronicVouchersService.print(res)
+    .subscribe((res : any) =>{
+     
+      if(res.data.success){
+        var win = window.open();
+        win.document.open();
+        win.document.write(res.data.imprimir);
+        win.document.close();
+        win.focus();
+      }else{
+        this.alert.error('Ooops', 'No se pudo cargar la información');
+      }
+    });
   }
 }

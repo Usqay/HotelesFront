@@ -41,12 +41,6 @@ import { DisableKeyPressDirective } from './directives/disable-key-press.directi
 import { OnlyAlphabetsDirective } from './directives/only-alphabets.directive';
 import { OnlyNumbersDirective } from './directives/only-numbers.directive';
 
-import { ConsumptionFormComponent } from '../components/sales-components/consumption-form/consumption-form.component';
-import { SaleClientFormComponent } from '../components/sales-components/sale-client-form/sale-client-form.component';
-import { SaleFormComponent } from '../components/sales-components/sale-form/sale-form.component';
-import { SalePaymentFormComponent } from '../components/sales-components/sale-payment-form/sale-payment-form.component';
-import { SaleProductsComponent } from '../components/sales-components/sale-products/sale-products.component';
-
 
 
 @NgModule({
@@ -145,6 +139,7 @@ export class SharedModule {
       ngModule: SharedModule,
       providers :[
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+       
         //{ provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
       ]
     };

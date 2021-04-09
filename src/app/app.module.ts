@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import localeEsPe from '@angular/common/locales/es-PE';
 import { registerLocaleData } from '@angular/common';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 registerLocaleData(localeEsPe, 'es-Pe');
 
@@ -29,7 +30,9 @@ registerLocaleData(localeEsPe, 'es-Pe');
   providers: [
 
     { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
-    { provide: LOCALE_ID, useValue: 'es-Pe' }
+    { provide: LOCALE_ID, useValue: 'es-Pe' },
+    { provide: MAT_DATE_LOCALE, useValue: 'es-Pe' }
+
 
   ],
   bootstrap: [AppComponent]

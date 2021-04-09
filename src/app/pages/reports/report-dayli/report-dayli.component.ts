@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DATE_FORMATS } from '@angular/material/core';
 import { Subscription } from 'rxjs';
 import { CashRegister } from 'src/app/shared/interfaces/cash-register';
 import { Currency } from 'src/app/shared/interfaces/currency';
@@ -9,10 +10,25 @@ import { CashRegistersService } from 'src/app/shared/services/cash-registers.ser
 import { ReportsService } from 'src/app/shared/services/reports.service';
 import { UserService } from 'src/app/shared/services/user.service';
 
+export const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY'
+  },
+};
+
 @Component({
   selector: 'app-report-dayli',
   templateUrl: './report-dayli.component.html',
-  styleUrls: ['./report-dayli.component.scss']
+  styleUrls: ['./report-dayli.component.scss'],
+  providers: [
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
+  ]
 })
 export class ReportDayliComponent implements OnInit {
 
@@ -23,6 +39,7 @@ export class ReportDayliComponent implements OnInit {
   cashRegisterMovementsByPaymentMethod : any[] = []
   currencyRates : CurrencyRate[] = []
   incomeAndExpenses : any[] = []
+  currentDate = new Date();
 
   getCashRegistersSubscription: Subscription = null
   getReportSubscription: Subscription = null
@@ -48,7 +65,7 @@ export class ReportDayliComponent implements OnInit {
 
   createFiltersForm() {
     this.filtersForm = this.formBuilder.group({
-      date: this.formBuilder.control(new Date(), Validators.required),
+      date: this.formBuilder.control(this.currentDate, Validators.required),
       cash_register_id: this.formBuilder.control(0, Validators.required),
     })
 
@@ -78,7 +95,9 @@ export class ReportDayliComponent implements OnInit {
       this.incomeAndExpenses = data.income_and_expenses
       this.cashRegisterMovementsByPaymentMethod = data.cash_register_movements_by_payment_methods
       this.alert.hide()
-    }, error => this.alert.error())
+    }, error => {     
+      this.alert.error('Error',error.error.message +' - ' + error.error.file +' - ' + error.url)
+  })
   }
 
   getCashRegisterMovementsByType(typeId){
@@ -103,3 +122,4 @@ export class ReportDayliComponent implements OnInit {
 
 }
 
+ 

@@ -137,6 +137,7 @@ export class ListCashRegisterMovementsComponent implements OnInit {
   listItems(formValue){
     console.log(formValue);
     this.alert.loading()
+    if ((typeof formValue.cashRegister === 'object')) formValue.cashRegister =formValue.cashRegister.id
     this.itemsSubscription = this.cashRegisterMovementsService.listar(null, this.page, this.paginate, formValue.cashRegister, formValue.start_date, formValue.end_date)
     .subscribe(data => {
       this.items = data.data.map(i => {

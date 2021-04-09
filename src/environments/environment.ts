@@ -8,8 +8,8 @@ export const environment = {
   //filesUrl: 'http://arenablancapi.hoteles.sistemausqay.com/storage/',
   apiDni: 'http://clientapi.sistemausqay.com/dni.php',
   apiRuc: 'http://clientapi.sistemausqay.com/ruc.php',
-  apiUrl: 'http://localhost/hotel/public/api/',
-  filesUrl: 'http://localhost/hotel/public/storage/'
+  apiUrl: 'http://localhost/hotelesback/public/api/',
+  filesUrl: 'http://localhost/hotelesback/public/storage/'
 };
 
 /*
