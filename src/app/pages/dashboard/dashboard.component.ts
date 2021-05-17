@@ -7,6 +7,7 @@ import { DashboardService } from 'src/app/shared/services/dashboard.service';
 import { RoomsService } from 'src/app/shared/services/rooms.service';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import { Color, Label } from 'ng2-charts';
+import { LicenciasService } from 'src/app/shared/services/licencias.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,7 +26,8 @@ export class DashboardComponent implements OnInit {
   constructor(private alert : AlertService,
     private dashboardService : DashboardService,
     private router : Router,
-    private roomsService : RoomsService) { }
+    private roomsService : RoomsService,
+    private licenciasServie : LicenciasService,) { }
 
     config: any;
     gstcState: any;
@@ -58,17 +60,34 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     //this.getRooms()
-
     //this.getData();
-
-
+    this.validarUso();
   }
+
+
   ngAfterViewInit() {
     // ...
     this.getData();
   }
   ngOnDestroy(){
     this.subs.unsubscribe();
+
+  }
+
+  private validarUso(){
+    let env =JSON.parse( localStorage.getItem('_env'));
+    var res= this.getSystemConfigurationValue('billing_token',env.system_configurations);
+    let data ={token : res};
+   
+    this.subs.add(
+      this.licenciasServie.ValidarUso(data)
+      .subscribe((data: any) => {
+        if(!data.ok){
+          this.alert.warning( data.message + ', por favor consulte con el administrador del sistema' , 'Advertencia');
+        }
+      })
+
+    );
 
   }
 
@@ -85,6 +104,14 @@ export class DashboardComponent implements OnInit {
       })
     );
   }
+
+  private getSystemConfigurationValue(key : string, systemConfigurations){
+    console.log(systemConfigurations);
+    const index = systemConfigurations.findIndex(i => i.key == key)
+    if(index != -1) return systemConfigurations[index].value
+    return null
+  }
+
 
 
 

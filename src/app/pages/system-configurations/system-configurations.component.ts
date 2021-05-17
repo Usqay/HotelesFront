@@ -82,6 +82,10 @@ export class SystemConfigurationsComponent implements OnInit {
       invoice_auto_increment : this.formBuilder.control('', Validators.required),
       ballot_series : this.formBuilder.control('', Validators.required),
       ballot_auto_increment : this.formBuilder.control('', Validators.required),
+      ncf_series : this.formBuilder.control('', Validators.required),
+      ncf_auto_increment : this.formBuilder.control('', Validators.required),
+      ncb_series : this.formBuilder.control('', Validators.required),
+      ncb_auto_increment : this.formBuilder.control('', Validators.required),
     })
 
     this.printingForm = this.formBuilder.group({
@@ -203,6 +207,10 @@ export class SystemConfigurationsComponent implements OnInit {
       invoice_auto_increment : this.getSystemConfigurationValue('invoice_auto_increment'),
       ballot_series : this.getSystemConfigurationValue('ballot_series'),
       ballot_auto_increment : this.getSystemConfigurationValue('ballot_auto_increment'),
+      ncf_series : this.getSystemConfigurationValue('ncf_series'),
+      ncf_auto_increment : this.getSystemConfigurationValue('ncf_auto_increment'),
+      ncb_series : this.getSystemConfigurationValue('ncb_series'),
+      ncb_auto_increment : this.getSystemConfigurationValue('ncb_auto_increment'),
     })
 
     this.printingForm.setValue({

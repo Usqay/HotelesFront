@@ -23,6 +23,6 @@ import { SharedModule } from '../shared/shared.module';
     CommonModule,
     LayoutRoutingModule,
     SharedModule.forRoot()
-  ]
+  ],
 })
 export class LayoutModule { }

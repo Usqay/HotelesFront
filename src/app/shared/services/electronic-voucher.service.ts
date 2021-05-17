@@ -61,4 +61,9 @@ export class ElectronicVoucherService {
       headers : this.headers
     })
   }
+  cancel(electronicVoucherId){
+    return this.http.get(`${environment.apiUrl}electronic-vouchers/cancel/${electronicVoucherId}`,{
+      headers : this.headers
+    })
+  }
 }

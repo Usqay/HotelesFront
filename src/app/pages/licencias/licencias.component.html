@@ -1,0 +1,79 @@
+<div class="layout-content">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-md-8 col-center">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-primary pt-2 pb-0 text-left">
+                        <h2 class="card-title">
+                            <mat-icon>vpn_key</mat-icon> Validar Licencia
+                        </h2>
+                    </div>
+                    <div class="card-body text-center p-2">
+                        <form [formGroup]="formLicencias" (ngSubmit)="_onSubmit()" novalidate autocomplete="off">
+                            <div class="row">
+                                <div class="col-12 col-md-12">
+                                    <div class="input-group mb-3">
+                                        <input type="text" formControlName="token" #token class="form-control"
+                                            placeholder="Ingrese Token de Validación"
+                                            aria-label="Ingrese Token de Validación" aria-describedby="button-addon2">
+                                        <button class="fa fa-search btn btn-outline-secondary" (click)="consultaToken(token)" type="button"></button>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="input-group mb-3">
+                                        <input type="text" formControlName="ruc" class="form-control"
+                                            placeholder="Ingrese RUC">
+                                        <button class="btn btn-outline-secondary" type="button">
+                                            <img style="width: 15px; height: 15px;" src="../../../assets/images/logo/sunat.ico"/>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="input-group mb-3">
+                                        <input type="text" formControlName="nombre" class="form-control"
+                                            placeholder="Nombre">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="input-group mb-3">
+                                        <input type="text" formControlName="razonSocial" class="form-control"
+                                            placeholder="Razón Social">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="input-group mb-3">
+                                        <input type="text" formControlName="nombreComercial" class="form-control"
+                                            placeholder="Nombre Comercial">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-12">
+                                    <div class="input-group mb-3">
+                                        <input type="text" formControlName="direccion" class="form-control"
+                                            placeholder="Dirección">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="input-group mb-3">
+                                        <input type="text" formControlName="telefono" class="form-control"
+                                            placeholder="Teléfono">
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="input-group mb-3">
+                                        <input type="text" formControlName="ciudad" class="form-control"
+                                            placeholder="Ciudad">
+                                    </div>
+                                </div>
+                                <button mat-flat-button type="submit"  color="primary" class="m-1">
+                                    <mat-icon>vpn_key</mat-icon>
+                                    Iniciar Sistema
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

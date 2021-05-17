@@ -23,6 +23,7 @@ export class ListElectronicVouchersComponent implements OnInit {
   itemsSubscription : Subscription = null
   printSubscription : Subscription = null
   searchProductsSubscription : Subscription = null
+  electronicSubscription : Subscription = null
   baseCurency : Currency
 
   columns = [
@@ -88,6 +89,20 @@ export class ListElectronicVouchersComponent implements OnInit {
           click : (value) => {
             this.onPrint(value)
           }
+        },
+        {
+          icon : 'file_copy',
+          tooltip : 'Generar nota de credito (Anular)',
+          click : (value) => {
+            this.onDeleteNC(value)
+          }
+        },
+        {
+          icon : 'delete_forever',
+          tooltip : 'Eliminar registro',
+          click : (value) => {
+            this.onDelete(value)
+          }
         }
       ]
     }
@@ -121,6 +136,8 @@ export class ListElectronicVouchersComponent implements OnInit {
     if(this.itemsSubscription != null) this.itemsSubscription.unsubscribe()
     if(this.printSubscription != null) this.itemsSubscription.unsubscribe()
     if(this.searchProductsSubscription != null) this.searchProductsSubscription.unsubscribe()
+    if(this.electronicSubscription != null) this.electronicSubscription.unsubscribe()
+    
   }
 
   listItems(q = null){
@@ -177,4 +194,56 @@ export class ListElectronicVouchersComponent implements OnInit {
       }
     });
   }
+  onDeleteNC(itemId){
+
+    this.alert.question('Anular documento con Nota de Crédito')
+    .then(result => {
+      if(result.value){
+        this.alert.loading()
+
+        this.electronicSubscription = this.electronicVouchersService.cancel(itemId)
+        .subscribe(data => {
+          this.listItems()
+        }, error => {
+          this.alert.error('Ooops', 'No se pudo eliminar este registro')
+        })
+      }
+    })
+   
+  }
+
+  onDelete(itemId){
+
+    this.alert.question('Desea eliminar permanentemente este registro?')
+    .then(result => {
+      if(result.value){
+        this.alert.loading()
+
+        this.electronicSubscription = this.electronicVouchersService.delete(itemId)
+        .subscribe((data : any) => {
+          this.alert.hide()
+          //console.log(data);
+          //console.log(data.success);
+          if(data.success){            
+            this.alert.success('Documento Anulado');
+          }else{
+            this.alert.warning(data.message);
+          }
+         
+          setTimeout(()=>{                         
+           this.listItems(); 
+           //window.location.reload();
+          }, 3000);
+
+        
+         
+        }, error => {
+          this.alert.error('Ooops', 'No se pudo eliminar este registro')
+          this.alert.hide()
+        })
+      }
+    })
+   
+  }
+
 }

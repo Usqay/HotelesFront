@@ -1,3 +1,4 @@
+import { SystemConfigurationsService } from './../../shared/services/system-configurations.service';
 import { Component, OnInit, ɵConsole } from '@angular/core';
 import { FormGroup, FormBuilder, Validators  } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
@@ -62,9 +63,11 @@ export class LoginComponent implements OnInit {
   constructor(private alert : AlertService,
     private formBuilder : FormBuilder,
     private router : Router,
-    private userService : UserService) { }
+    private userService : UserService,
+    private configuracionService : SystemConfigurationsService) { }
 
   ngOnInit(): void {
+    this.vrificaToken();
     this.createForm()
     this.isDisplayed= false;
 
@@ -90,7 +93,7 @@ export class LoginComponent implements OnInit {
       remember : this.formBuilder.control(true, Validators.required)
     })
   }
-
+//eyJhbGciOiJIUzI1NiJ9.ImIwMGM4ZTc1ZTQwYTQzZDI4YzFlNDBhMTJhYWE0NWVjYzRiZjNhZjFhYjUxNGU2YmI5NTVjMzQwMTA5YWUwZDki.Mn4iBhqpQd2HAF1YeWbaR0yfWr-0uUpnpVvTuziunyk
   onLogin(){
     const formData = this.form.value
     const {email, password, remember} = formData
@@ -101,12 +104,46 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('_user', JSON.stringify(data.data.user));
         //here is token inside data
         localStorage.setItem('_env', JSON.stringify(data.data.env))
+
         this.router.navigate(['/dashboard']);
+      
+
 
       }, error => {
         this.alert.error('Ooops', 'No se pudo acceder, verifique sus credenciales.')
       })
     );
+  }
+
+  private vrificaToken(){
+
+    this.subs.add(
+       this.configuracionService.list(null, 1, 999)
+      .subscribe((data : any) => {
+        //console.log(data.data);       
+
+        var res= this.getSystemConfigurationValue('billing_token',data.data);
+        localStorage.setItem('_token1', (res))
+
+        if(res ==0){ // No hay token configurado para la conexión a firebase
+          this.router.navigate(['/validar-licencia']);
+        }else{
+          this.router.navigate(['/login']);
+        }
+  
+      }, error => {
+        this.alert.error('Ooops', 'No se pudo leer la información');
+      })
+    );
+  
+
+  }
+
+  private getSystemConfigurationValue(key : string, systemConfigurations){
+ 
+    const index = systemConfigurations.findIndex(i => i.key == key)
+    if(index != -1) return systemConfigurations[index].value
+    return null
   }
 
 

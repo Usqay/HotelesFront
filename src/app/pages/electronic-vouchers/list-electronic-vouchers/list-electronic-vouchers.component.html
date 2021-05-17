@@ -15,6 +15,22 @@
                             <input matInput #searchInput placeholder="Escribe para buscar...">
                         </mat-form-field>
                     </div>
+                    <!--<div class="col-12 col-md-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Desde</mat-label>
+                            <input matInput formControlName="start_date" [matDatepicker]="StartPicker">
+                            <mat-datepicker-toggle matSuffix [for]="StartPicker"></mat-datepicker-toggle>
+                            <mat-datepicker #StartPicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-12 col-md-3">
+                        <mat-form-field appearance="outline" class="w-100">
+                            <mat-label>Hasta</mat-label>
+                            <input matInput formControlName="end_date" [matDatepicker]="EndPicker">
+                            <mat-datepicker-toggle matSuffix [for]="EndPicker"></mat-datepicker-toggle>
+                            <mat-datepicker #EndPicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>-->
                     <div class="col-12">
                         <app-list-data *ngIf="items.length > 0" [cols]="columns" [items]="items"
                             [totalItems]="totalItems" (pageEvent)="onChangePage($event)"></app-list-data>
