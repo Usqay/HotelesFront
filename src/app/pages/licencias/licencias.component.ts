@@ -7,6 +7,7 @@ import { AlertService } from 'src/app/shared/services/alert.service';
 import { ErrorService } from 'src/app/shared/services/error.service';
 import { SystemConfiguration } from 'src/app/shared/interfaces/system-configuration';
 import { Router } from '@angular/router';
+import { PeopleService } from 'src/app/shared/services/people.service';
 
 @Component({
   selector: 'app-licencias',
@@ -26,7 +27,8 @@ export class LicenciasComponent implements OnInit {
     private alert : AlertService, 
     private errorService : ErrorService,
     private router : Router,
-    private systemsConfigurationService : SystemConfigurationsService) { }
+    private systemsConfigurationService : SystemConfigurationsService,
+    private peopleService: PeopleService) { }
 
   ngOnInit(): void {
 
@@ -162,6 +164,31 @@ export class LicenciasComponent implements OnInit {
     return null
   }
 
+  consultaRucSunat(){
+
+    this.alert.loading();
+    const document = this.formLicencias.value.ruc;
+    const documentType =3;
+
+    this.peopleService.searchApi(documentType, document)
+      .subscribe((response: any) => {
+        const person = response;
+
+         if (person) {   
+          this.formLicencias.controls['nombre'].setValue(person.razon_social);
+          this.formLicencias.controls['razonSocial'].setValue(person.razon_social);
+          this.formLicencias.controls['nombreComercial'].setValue(person.razon_social);
+          this.formLicencias.controls['direccion'].setValue(person.direccion);
+         
+
+          this.alert.hide()
+        }else{
+
+          this.alert.warning('No hay datos a mostrar');
+
+        }
+      });
+  }
   
 
 }

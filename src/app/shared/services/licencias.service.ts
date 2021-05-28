@@ -21,6 +21,12 @@ export class LicenciasService {
     })
   }
 
+  getData(token){
+    return this.http.post(`${environment.apiUrl}licencias/getData`,token,{
+      headers : this.headers
+    })
+  }
+
   validarLicencia(systemConfiguration : any){
     return this.http.post(`${environment.apiUrl}licencias/validarLicencia`, systemConfiguration,{
       headers : this.headers
@@ -32,6 +38,13 @@ export class LicenciasService {
       headers : this.headers
     })
   }
+  
+  searchDocument(electronicVoucherId){
+    return this.http.delete(`${environment.apiUrl}licencias/searchDocument/${electronicVoucherId}`,{
+      headers : this.headers
+    })
+  }
+
 
 
 }

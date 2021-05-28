@@ -13,19 +13,28 @@
                         <mat-tab label="Negocio">
                             <form [formGroup]="businessForm" (ngSubmit)="onSubmitBusinessForm()" novalidate
                                 autocomplete="off" class="row m-0 pt-4 w-100">
+                               
+                                <div class="col-12 col-md-6 col-lg-3">
+                                    <div class="input-group mb-3">
+                                        <mat-form-field appearance="outline" class="w-100">
+                                            <mat-label>RUC</mat-label>
+                                            <input matInput formControlName="ruc">
+                                        </mat-form-field>
+                                       
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-lg-2 pt-2">
+                                    <button class="btn btn-outline-secondary" (click)="consultaRuc()" type="button">
+                                        <img style="width: 15px; height: 15px;" src="../../../assets/images/logo/sunat.ico"/>
+                                    </button>
+                                </div>
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Razón social</mat-label>
                                         <input matInput formControlName="business_name">
                                     </mat-form-field>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-4">
-                                    <mat-form-field appearance="outline" class="w-100">
-                                        <mat-label>RUC</mat-label>
-                                        <input matInput formControlName="ruc">
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-12 col-md-6 col-lg-4">
+                                </div>                               
+                                <div class="col-12 col-md-6 col-lg-4 ">
                                     <mat-form-field appearance="outline" class="w-100">
                                         <mat-label>Nombre comercial</mat-label>
                                         <input matInput formControlName="commercial_name">

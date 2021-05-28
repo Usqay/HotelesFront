@@ -11,6 +11,8 @@ import { UserService } from 'src/app/shared/services/user.service';
 import { Printer } from 'src/app/shared/interfaces/printer';
 import { PrinterService } from 'src/app/shared/services/printer.service';
 import { environment } from 'src/environments/environment';
+import { PeopleService } from 'src/app/shared/services/people.service';
+import { LicenciasService } from 'src/app/shared/services/licencias.service';
 
 @Component({
   selector: 'app-system-configurations',
@@ -36,24 +38,32 @@ export class SystemConfigurationsComponent implements OnInit {
   systemConfigurationsSubscription : Subscription = null
   enviromentsSubscription : Subscription = null
   getPrintersSubscription : Subscription = null
+  getDataSubscription : Subscription = null
+
+  _token : any ='';
 
   constructor(private alert : AlertService,
     private formBuilder : FormBuilder,
     private userService : UserService,
     private systemConfigurationsService : SystemConfigurationsService,
     private printersService : PrinterService,
-    private errorService : ErrorService) { }
+    private errorService : ErrorService,
+    private licenciasServie : LicenciasService,) { }
 
   ngOnInit(): void {
     this.createForms()
     this.getSystemConfigurations()
     this.getPrinters()
+
+    this._token =JSON.parse(localStorage.getItem('_env'));
+
   }
 
   ngOnDestroy(){
     if(this.systemConfigurationsSubscription != null) this.systemConfigurationsSubscription.unsubscribe()
     if(this.enviromentsSubscription != null) this.enviromentsSubscription.unsubscribe()
     if(this.getPrintersSubscription != null) this.getPrintersSubscription.unsubscribe()
+    if(this.getDataSubscription != null) this.getDataSubscription.unsubscribe()
   }
 
   private createForms(){
@@ -259,6 +269,53 @@ export class SystemConfigurationsComponent implements OnInit {
       const file = event.target.files[0]
       this.uploadLogo(file)
     }
+  }
+  private getSystemConfigurationValue2(key : string, systemConfigurations){  
+    const index = systemConfigurations.findIndex(i => i.key == key)
+    if(index != -1) return systemConfigurations[index].value
+    return null
+  }
+
+  private makeArrayFromObject2(obj : Object) {
+    const objectArray = Object.entries(obj);  
+   const result = objectArray.map(([key, value]) => {
+      return {key : value.key, value : value.value}
+    });
+  
+    return result ? result : []
+  }
+  consultaRuc(){
+
+    this.alert.loading();
+   
+    const res = this.makeArrayFromObject2(this._token.system_configurations);
+    var datos = this.getSystemConfigurationValue2('billing_token',res);
+    console.log(this._token.system_configurations);
+    if (!res){
+      this.alert.warning('No existe token a consultar'); 
+      return;
+    }
+
+    let data ={token :  datos};
+
+    this.getDataSubscription = this.licenciasServie.getData(data)
+    .subscribe((data : any) => {
+        console.log(data)
+
+        if (data){
+          this.businessForm.patchValue({
+            business_name : data.nombre,           
+            commercial_name : data.nombre_comercial,
+            business_phone_number :data.telefono,
+            business_address : data.direccion,  
+            ruc : data.ruc   
+          });
+          this.alert.hide()
+        }else {
+          this.alert.warning('Negocio no encontrado'); 
+        }
+    });
+    
   }
 
 }

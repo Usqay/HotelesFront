@@ -1,3 +1,4 @@
+import { LicenciasService } from 'src/app/shared/services/licencias.service';
 import { debounceTime, distinctUntilChanged, filter, tap } from 'rxjs/operators';
 import { Component, OnInit, ViewChild ,ElementRef} from '@angular/core';
 import { Router } from '@angular/router';
@@ -103,6 +104,13 @@ export class ListElectronicVouchersComponent implements OnInit {
           click : (value) => {
             this.onDelete(value)
           }
+        },
+        {
+          icon : 'search',
+          tooltip : 'Consultar comprobante en sunat',
+          click : (value) => {
+            this.onConsult(value)
+          }
         }
       ]
     }
@@ -111,7 +119,8 @@ export class ListElectronicVouchersComponent implements OnInit {
   constructor(private electronicVouchersService : ElectronicVoucherService,
     private router : Router,
     private userService : UserService,
-    private alert : AlertService) { }
+    private alert : AlertService,
+    private licenciaService : LicenciasService) { }
 
   ngOnInit(): void {
     this.baseCurency = this.userService.enviroment('base_currency')
@@ -202,8 +211,22 @@ export class ListElectronicVouchersComponent implements OnInit {
         this.alert.loading()
 
         this.electronicSubscription = this.electronicVouchersService.cancel(itemId)
-        .subscribe(data => {
-          this.listItems()
+        .subscribe((data : any) => {
+          console.log(data);
+          if(data.data){
+            if(data.data.success){
+              this.alert.warning(data.data.respuesta.api_result.sunat_description);
+
+              setTimeout(()=>{
+                this.listItems()
+              },2000);
+              
+            }else{
+              this.alert.warning(data.data.error);
+            }
+          }
+        
+          
         }, error => {
           this.alert.error('Ooops', 'No se pudo eliminar este registro')
         })
@@ -220,6 +243,40 @@ export class ListElectronicVouchersComponent implements OnInit {
         this.alert.loading()
 
         this.electronicSubscription = this.electronicVouchersService.delete(itemId)
+        .subscribe((data : any) => {
+          this.alert.hide()
+          //console.log(data);
+          //console.log(data.success);
+          if(data.success){            
+            this.alert.success('Documento Anulado');
+          }else{
+            this.alert.warning(data.message);
+          }
+         
+          setTimeout(()=>{                         
+           this.listItems(); 
+           //window.location.reload();
+          }, 3000);
+
+        
+         
+        }, error => {
+          this.alert.error('Ooops', 'No se pudo eliminar este registro')
+          this.alert.hide()
+        })
+      }
+    })
+   
+  }
+  onConsult(itemId){
+    this.alert.info('En proceso..!','oli :)');
+    return;
+    this.alert.question('Desea consultar este documento?')
+    .then(result => {
+      if(result.value){
+        this.alert.loading()
+
+        this.electronicSubscription = this.licenciaService.searchDocument(itemId)
         .subscribe((data : any) => {
           this.alert.hide()
           //console.log(data);
