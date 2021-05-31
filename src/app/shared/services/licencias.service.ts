@@ -40,7 +40,7 @@ export class LicenciasService {
   }
   
   searchDocument(electronicVoucherId){
-    return this.http.delete(`${environment.apiUrl}licencias/searchDocument/${electronicVoucherId}`,{
+    return this.http.get(`${environment.apiUrl}licencias/searchDocument/${electronicVoucherId}`,{
       headers : this.headers
     })
   }

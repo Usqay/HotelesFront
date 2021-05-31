@@ -269,8 +269,7 @@ export class ListElectronicVouchersComponent implements OnInit {
    
   }
   onConsult(itemId){
-    this.alert.info('En proceso..!','oli :)');
-    return;
+   
     this.alert.question('Desea consultar este documento?')
     .then(result => {
       if(result.value){
@@ -279,19 +278,14 @@ export class ListElectronicVouchersComponent implements OnInit {
         this.electronicSubscription = this.licenciaService.searchDocument(itemId)
         .subscribe((data : any) => {
           this.alert.hide()
-          //console.log(data);
+           console.log(data.errors);
           //console.log(data.success);
-          if(data.success){            
-            this.alert.success('Documento Anulado');
+          if(data.errors){            
+            this.alert.warning(data.errors);
           }else{
-            this.alert.warning(data.message);
+            this.alert.success(data.sunat_description);
           }
          
-          setTimeout(()=>{                         
-           this.listItems(); 
-           //window.location.reload();
-          }, 3000);
-
         
          
         }, error => {
